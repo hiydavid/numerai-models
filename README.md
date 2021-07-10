@@ -1,2 +1,3 @@
-# numerai-models
-Models for Numerai submissions.
+# Numerai Models
+* Repo of models for my Numerai submissions
+* Check out [here](https://numer.ai/tournament) for the Numerai tournament details.
