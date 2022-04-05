@@ -1,5 +1,5 @@
 # from here: https://github.com/numerai/example-scripts/blob/master/utils.py
-# updated: 2022-03-30
+# updated: 2022-04-04
 
 import os
 import requests
@@ -15,7 +15,9 @@ ERA_COL = "era"
 TARGET_COL = "target_nomi_20"
 DATA_TYPE_COL = "data_type"
 EXAMPLE_PREDS_COL = "example_preds"
+
 spinner = Halo(text='', spinner='dots')
+
 MODEL_FOLDER = "models"
 MODEL_CONFIGS_FOLDER = "model_configs"
 PREDICTION_FILES_FOLDER = "prediction_files"
