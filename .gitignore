@@ -8,3 +8,4 @@ training_data.parquet
 validation_data.parquet
 tournament_data_310.parquet
 data/features.json
+.ipynb_checkpoints/download_data-checkpoint.ipynb
