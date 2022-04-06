@@ -1,15 +1,12 @@
 
 .ipynb_checkpoints/features_eda-checkpoint.ipynb
 .ipynb_checkpoints/utils-checkpoint.py
-numerai_training_data.parquet
 __pycache__/utils.cpython-310.pyc
 .ipynb_checkpoints/numerai_data-checkpoint.ipynb
-training_data.parquet
-validation_data.parquet
-tournament_data_310.parquet
 data/features.json
 .ipynb_checkpoints/download_data-checkpoint.ipynb
 .ipynb_checkpoints/base_model-checkpoint.ipynb
 __pycache__/utils.cpython-39.pyc
 .DS_Store
 *.csv
+*.parquet
