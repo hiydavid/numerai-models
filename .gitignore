@@ -11,3 +11,5 @@ data/features.json
 .ipynb_checkpoints/download_data-checkpoint.ipynb
 .ipynb_checkpoints/base_model-checkpoint.ipynb
 __pycache__/utils.cpython-39.pyc
+.DS_Store
+*.csv
