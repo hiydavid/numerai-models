@@ -1,9 +1,5 @@
 # Models for Numerai Competition
 
-## Numerai Models
-* Repo of models for my Numerai submissions
-* Check out [here](https://numer.ai/tournament) for the Numerai tournament details.
-
 ## Models
 * v0: 
   * LightGBM Regressor
@@ -15,6 +11,11 @@
     * "num_leaves": 2 ** 5
     * "colsample_bytree": 0.1
 
+## Tracking Results
+* [Model performance](https://numer.ai/models)
+* [Tournament leaderboard](https://numer.ai/tournament)
+
+
 ## Helpful Links
-* https://docs.numer.ai/
-* https://github.com/numerai/example-scripts
+* [Tournament documentation](https://docs.numer.ai/)
+* [Numerai example script](https://github.com/numerai/example-scripts)
