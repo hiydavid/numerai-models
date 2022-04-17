@@ -14,3 +14,7 @@
     * "max_depth": 5
     * "num_leaves": 2 ** 5
     * "colsample_bytree": 0.1
+
+## Helpful Links
+* https://docs.numer.ai/
+* https://github.com/numerai/example-scripts
