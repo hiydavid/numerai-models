@@ -1,8 +1,8 @@
 # Models for Numerai Competition
 
 ## Models
-* base_v0: 
-  * LightGBM Regressor
+### LightGBM Regressor
+* base_v0 :
   * Trained on top 50 riskiest "medium" features
   * Params:
     * "n_estimators": 2000
@@ -10,6 +10,12 @@
     * "max_depth": 5
     * "num_leaves": 2 ** 5
     * "colsample_bytree": 0.1
+
+### Deep Neural Networks
+* *incoming*
+
+### Voting Regressor
+* *incoming*
 
 ## Tracking Results
 * [Model performance](https://numer.ai/models)
