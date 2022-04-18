@@ -1,9 +1,9 @@
 # Models for Numerai Competition
 
 ## Models
-* v0: 
+* base_v0: 
   * LightGBM Regressor
-  * Trained on top riskiest "medium" features
+  * Trained on top 50 riskiest "medium" features
   * Params:
     * "n_estimators": 2000
     * "learning_rate": 0.01
