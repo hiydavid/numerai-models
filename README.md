@@ -2,7 +2,7 @@
 
 ## Models
 ### LightGBM Regressor
-* lgbm_base_v0:
+* lgbm_mid_v0:
   * Trained on all medium features
   * Top 50 riskiest features neuralized
   * Params:
@@ -12,7 +12,7 @@
     * "num_leaves": 2 ** 5
     * "colsample_bytree": 0.1
 
-* lgbm_small_v0:
+* lgbm_sml_v0:
   * Trained on all small features
   * Top 5 riskiest features neutralized
     * Params:
