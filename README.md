@@ -2,14 +2,25 @@
 
 ## Models
 ### LightGBM Regressor
-* base_v0 :
-  * Trained on top 50 riskiest "medium" features
+* lgbm_base_v0:
+  * Trained on all medium features
+  * Top 50 riskiest features neuralized
   * Params:
     * "n_estimators": 2000
     * "learning_rate": 0.01
     * "max_depth": 5
     * "num_leaves": 2 ** 5
     * "colsample_bytree": 0.1
+
+* lgbm_small_v0:
+  * Trained on all small features
+  * Top 5 riskiest features neutralized
+    * Params:
+      * "n_estimators": 1000
+      * "learning_rate": 0.01
+      * "max_depth": 5
+      * "num_leaves": 2 ** 5
+      * "colsample_bytree": 0.1
 
 ### Deep Neural Networks
 * *incoming*
