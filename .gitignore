@@ -12,3 +12,4 @@ __pycache__/utils.cpython-39.pyc
 *.parquet
 *.pyc
 .ipynb_checkpoints/eval_utils-checkpoint.py
+.ipynb_checkpoints/model_foxhound_v0-checkpoint.ipynb
