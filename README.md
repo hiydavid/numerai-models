@@ -1,44 +1,39 @@
 # Models for Numerai Competition
 
 ## Models
-### LightGBM Regressor
-* Foxhound_v0:
+### Foxhound
+* v0:
   * LightGBM
   * Trained on all medium features
   * Top 50 riskiest features neuralized
   * Params: `{"n_estimators": 2000, "learning_rate": 0.01, "max_depth": 5, "num_leaves": 2 ** 5, "colsample_bytree": 0.1}`
 
-* Deadcell_v0:
+### Deadcell
+* v0:
   * LightGBM
   * Trained on all small features
   * Top 5 riskiest features neutralized
   * Params: `{"n_estimators": 1000, "learning_rate": 0.01, "max_depth": 5, "num_leaves": 2 ** 5, "colsample_bytree": 0.1`
 
-* Cobra_v0:
+### Cobra
+* v0:
   * LightGBM
   * Trained on all features
   * Top 120 riskiest features neutralized
   * Params: 
 
-* BeautyBeast_v0:
-  * d
+### BeautyBeast
+* v0: *incoming*
 
-* Skulls_v0:
-  * d
+### Skulls
+* v0: *incoming*
 
-* Desperado_v0
-  * d
-
-### Deep Neural Networks
-* *incoming*
-
-### Voting Regressor
-* *incoming*
+### Desperado
+* v0: *incoming*
 
 ## Tracking Results
 * [Model performance](https://numer.ai/models)
 * [Tournament leaderboard](https://numer.ai/tournament)
-
 
 ## Helpful Links
 * [Tournament documentation](https://docs.numer.ai/)
