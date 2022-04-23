@@ -3,22 +3,30 @@
 ## Models
 ### LightGBM Regressor
 * Foxhound_v0:
+  * LightGBM
   * Trained on all medium features
   * Top 50 riskiest features neuralized
   * Params: `{"n_estimators": 2000, "learning_rate": 0.01, "max_depth": 5, "num_leaves": 2 ** 5, "colsample_bytree": 0.1}`
 
 * Deadcell_v0:
+  * LightGBM
   * Trained on all small features
   * Top 5 riskiest features neutralized
   * Params: `{"n_estimators": 1000, "learning_rate": 0.01, "max_depth": 5, "num_leaves": 2 ** 5, "colsample_bytree": 0.1`
 
-* CobraUnit_v0:
-  * d
+* Cobra_v0:
+  * LightGBM
+  * Trained on all features
+  * Top 120 riskiest features neutralized
+  * Params: 
 
 * BeautyBeast_v0:
   * d
 
 * Skulls_v0:
+  * d
+
+* Desperado_v0
   * d
 
 ### Deep Neural Networks
