@@ -29,7 +29,8 @@
 * v0: *incoming*
 
 ### Desperado
-* v0: *incoming*
+* v0:
+  * Ensemble with simple averaging
 
 ## Tracking Results
 * [Model performance](https://numer.ai/models)
