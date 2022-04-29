@@ -8,6 +8,7 @@
   * `"max_depth": 5`
   * `"num_leaves": 2 ** 5`
   * `"colsample_bytree": 0.1`
+  * `"n_jobs": -1`
 
 ### **Deadcell**: Small features, with 5 neutralized
 * v0. LightGBM params:
@@ -16,11 +17,18 @@
   * `"max_depth": 5`
   * `"num_leaves": 2 ** 5`
   * `"colsample_bytree": 0.1`
+  * `"n_jobs": -1`
 * v1. XGBoost params:
   * TBD
 
-### **Cobra**: All features, with 120 neutralized
-* v0. TBD, params:
+### **Cobra**: Large features, with 60 neutralized
+* v0. LightGRM, params:
+  * `"n_estimators": 2000`
+  * `"learning_rate": 0.01`
+  * `"max_depth": 5`
+  * `"num_leaves": 2 ** 5`
+  * `"colsample_bytree": 0.1`
+  * `"n_jobs": -1`
 
 ### **BeautyBeast**:
 
@@ -41,7 +49,6 @@
 * Finish research issues
 * Complete building out new models
   1. Rebuild *Deadcell* with XGBoost
-  2. Build out *Cobra*, an all features model
-  3. Build out *BeautyBeast*, ensemble model trained on alternative features
-  4. Build out *Skulls*, an neural network based model trained on all features
-  5. Build a new version of *Desperado* with stacking regressor
+  2. Build out *BeautyBeast*, ensemble model trained on alternative features
+  3. Build out *Skulls*, an neural network based model trained on all features
+  4. Build a new version of *Desperado* with stacking regressor
