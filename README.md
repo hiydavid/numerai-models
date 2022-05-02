@@ -18,8 +18,6 @@
   * `"num_leaves": 2 ** 5`
   * `"colsample_bytree": 0.1`
   * `"n_jobs": -1`
-* v1. XGBoost params:
-  * TBD
 
 ### **Cobra**: Large features, with 60 neutralized
 * v0. LightGRM, params:
@@ -48,7 +46,6 @@
 ## Project Roadmap (By June 30th)
 * Finish research issues
 * Complete building out new models
-  1. Rebuild *Deadcell* with XGBoost
-  2. Build out *BeautyBeast*, ensemble model trained on alternative features
-  3. Build out *Skulls*, an neural network based model trained on all features
-  4. Build a new version of *Desperado* with stacking regressor
+  1. Build out *BeautyBeast*, ensemble model trained on alternative features
+  2. Build out *Skulls*, an neural network based model trained on all features
+  3. Build a new version of *Desperado* with stacking regressor
