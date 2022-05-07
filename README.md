@@ -20,7 +20,7 @@
   * `"n_jobs": -1`
 
 ### **Cobra**: Large features, with 60 neutralized
-* v0. LightGRM, params:
+* v0. LightGBM params:
   * `"n_estimators": 2000`
   * `"learning_rate": 0.01`
   * `"max_depth": 5`
@@ -28,7 +28,15 @@
   * `"colsample_bytree": 0.1`
   * `"n_jobs": -1`
 
-### **BeautyBeast**:
+### **BeautyBeast**: Medium features, trained on auxiliary targets
+* v0. Main model using simple averaging
+* v0. Auxiliary model using LightGBM with params:
+  * `"n_estimators": 500`
+  * `"learning_rate": 0.01`
+  * `"max_depth": 5`
+  * `"num_leaves": 2 ** 5`
+  * `"colsample_bytree": 0.1`
+  * `"n_jobs": -1`
 
 ### **Skulls**:
 
@@ -46,6 +54,5 @@
 ## Project Roadmap (By June 30th)
 * Finish research issues
 * Complete building out new models
-  1. Build out *BeautyBeast*, ensemble model trained on alternative features
-  2. Build out *Skulls*, an neural network based model trained on all features
-  3. Build a new version of *Desperado* with stacking regressor
+  1. Build out *Skulls*, an neural network based model trained on all features
+  2. Build a new version of *Desperado* with stacking regressor
