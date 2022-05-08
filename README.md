@@ -1,56 +1,43 @@
 # Models for Numerai Competition
 
 ## Models
-### **Foxhound**: Medium features, with 50 neuralized
-* v0. LightGBM params:
-  * `"n_estimators": 2000`
-  * `"learning_rate": 0.01`
-  * `"max_depth": 5`
-  * `"num_leaves": 2 ** 5`
-  * `"colsample_bytree": 0.1`
-  * `"n_jobs": -1`
+### **Foxhound**: 
+* Trained on medium features and main target
+* 50 neuralized
+* LightGBM model
 
-### **Deadcell**: Small features, with 5 neutralized
-* v0. LightGBM params:
-  * `"n_estimators": 1000`
-  * `"learning_rate": 0.01`
-  * `"max_depth": 5`
-  * `"num_leaves": 2 ** 5`
-  * `"colsample_bytree": 0.1`
-  * `"n_jobs": -1`
+### **Deadcell**: 
+* Trained on small features and main target
+* 5 neutralized
+* LightGBM model
 
-### **Cobra**: Large features, with 60 neutralized
-* v0. LightGBM params:
-  * `"n_estimators": 2000`
-  * `"learning_rate": 0.01`
-  * `"max_depth": 5`
-  * `"num_leaves": 2 ** 5`
-  * `"colsample_bytree": 0.1`
-  * `"n_jobs": -1`
+### **Cobra**: 
+* Trained on rest of the features and main target
+* 60 neutralized
+* LightGBM model
 
-### **BeautyBeast**: Medium features, trained on auxiliary targets
-* v0. Main model using simple averaging
-* v0. Auxiliary model using LightGBM with params:
-  * `"n_estimators": 500`
-  * `"learning_rate": 0.01`
-  * `"max_depth": 5`
-  * `"num_leaves": 2 ** 5`
-  * `"colsample_bytree": 0.1`
-  * `"n_jobs": -1`
+### **BeautyBeast**: 
+* Trained on medium features and auxiliary targets
+* Ensemble output as simple avgeraging
+* Auxiliary models using LightGBM
 
 ### **Skulls**:
 
-### **Desperado**: Ensemble prediction of all other models
-* v0. Simple averaging
+### **Desperado**: 
+* Ensemble prediction of all other models
+* Simple averaging
 
+---
 ## Tracking Results
 * [Model performance](https://numer.ai/models)
 * [Tournament leaderboard](https://numer.ai/tournament)
 
+---
 ## Helpful Links
 * [Tournament documentation](https://docs.numer.ai/)
 * [Numerai example script](https://github.com/numerai/example-scripts)
 
+---
 ## Project Roadmap (By June 30th)
 * Finish research issues
 * Complete building out new models
