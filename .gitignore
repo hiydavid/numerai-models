@@ -5,3 +5,4 @@ data/features.json
 *.csv
 *.parquet
 *.pyc
+*.ipynb_checkpoints
