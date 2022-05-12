@@ -1,0 +1,7 @@
+### install the following
+numerapi
+lightgbm
+xgboost
+pyarrow
+fastparquet
+yfinance
