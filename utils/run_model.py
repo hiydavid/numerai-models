@@ -21,6 +21,7 @@ class RunModel:
     def __init__(self, current_round):
         self.current_round = current_round
     
+
     # function to run latest foxhound model
     def run_foxhound(self, n_neutralize=50, version=0):
         model_name = f"dh_foxhound_v{version}"
@@ -71,6 +72,7 @@ class RunModel:
 
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
 
+
     # function to run latest deadcell model
     def run_deadcell(self, n_neutralize=5, version=0):
         model_name = f"dh_deadcell_v{version}"
@@ -120,6 +122,7 @@ class RunModel:
         gc.collect()
         
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
+
 
     # function to run latest cobra model
     def run_cobra(self, n_neutralize=60, version=0):
@@ -174,6 +177,7 @@ class RunModel:
         
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
 
+
     # function to run latest beautybeast model
     def run_beautybeast(self, version=0):
         model_name = f"dh_beautybeast_v{version}"
@@ -220,7 +224,46 @@ class RunModel:
 
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
 
-    # function to run latest beautybeast model
+
+    # function to run latest skulls model
+    def run_skulls(self, version=0):
+        model_name = f"dh_skulls_v{version}"
+        print(f"\nBegin running {model_name} for live round # {self.current_round}...")
+        
+        print(f">>> Importing data ...")
+        with open("data/top_bottom_features.json", "r") as f:
+            top_bottom_features = json.load(f)
+        features = top_bottom_features["top_features"] + top_bottom_features["bottom_features"]
+        read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
+        live_data = pd.read_parquet(f'data/live_{self.current_round}.parquet', columns=read_columns)
+
+        print(f">>> Preprocessing data ...")
+        nans_per_col = live_data[live_data["data_type"] == "live"].isna().sum()
+        if nans_per_col.any():
+            total_rows = len(live_data[live_data["data_type"] == "live"])
+            live_data.loc[:, features] = live_data.loc[:, features].fillna(0.5)
+        else:
+            pass
+        gc.collect()
+
+        print(f">>> Loading pre-trained model ...")
+        model = load_model(model_name)
+        model_expected_features = model.booster_.feature_name()
+        
+        print(f">>> Creating live predictions ...")
+        live_data.loc[:, f"preds_{model_name}"] = model.predict(live_data.loc[:, model_expected_features])
+        gc.collect()
+        
+        print(f">>> Saving live predictions ...")
+        model_to_submit = f"preds_{model_name}"
+        live_data["prediction"] = live_data[model_to_submit].rank(pct=True)
+        live_data["prediction"].to_csv(f"predictions/{model_name}_live_preds_{self.current_round}.csv")
+        gc.collect()
+        
+        print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
+
+
+    # function to run latest desperado model
     def run_desperado(self, version=0):
         model_name = f"dh_desperado_v{version}"
         print(f"\nBegin running {model_name} for live round # {self.current_round}...")
