@@ -22,6 +22,10 @@
 * Auxiliary models using LightGBM
 
 ### **Skulls**:
+* Trained on top 200 and bottom 200 features
+* Top/bottom determined by correlation to target
+* No features neutralized
+* LightGBM model
 
 ### **Desperado**: 
 * Ensemble prediction of all other models
