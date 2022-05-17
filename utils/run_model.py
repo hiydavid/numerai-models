@@ -21,11 +21,10 @@ class RunModel:
     def __init__(self, current_round):
         self.current_round = current_round
     
-
     # function to run latest foxhound model
     def run_foxhound(self, n_neutralize=50, version=0):
         model_name = f"dh_foxhound_v{version}"
-        print(f"\nBegin running {model_name} for live round # {self.current_round}...")
+        print(f"\nRunning {model_name} for live round # {self.current_round}...")
 
         print(f">>> Importing data ...")
         with open("data/features.json", "r") as f:
@@ -72,11 +71,10 @@ class RunModel:
 
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
 
-
     # function to run latest deadcell model
     def run_deadcell(self, n_neutralize=5, version=0):
         model_name = f"dh_deadcell_v{version}"
-        print(f"\nBegin running {model_name} for live round # {self.current_round}...")
+        print(f"\nRunning {model_name} for live round # {self.current_round}...")
         
         print(f">>> Importing data ...")
         with open("data/features.json", "r") as f:
@@ -123,11 +121,10 @@ class RunModel:
         
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
 
-
     # function to run latest cobra model
     def run_cobra(self, n_neutralize=60, version=0):
         model_name = f"dh_cobra_v{version}"
-        print(f"\nBegin running {model_name} for live round # {self.current_round}...")
+        print(f"\nRunning {model_name} for live round # {self.current_round}...")
         
         print(f">>> Importing data ...")
         with open("data/features.json", "r") as f:
@@ -177,36 +174,34 @@ class RunModel:
         
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
 
-
     # function to run latest beautybeast model
     def run_beautybeast(self, version=0):
         model_name = f"dh_beautybeast_v{version}"
-        print(f"\nBegin running {model_name} for live round # {self.current_round}...")
+        print(f"\nRunning {model_name} for live round # {self.current_round}...")
         
         print(f">>> Importing data ...")
         with open("data/features.json", "r") as f:
             feature_metadata = json.load(f)
         features = feature_metadata["feature_sets"]["medium"]
         targets = [
-            "target_nomi_v4_20", "target_jerome_v4_20", "target_janet_v4_20",
-            "target_ben_v4_20", "target_alan_v4_20", "target_paul_v4_20",
-            "target_george_v4_20", "target_william_v4_20", "target_arthur_v4_20",
-            "target_thomas_v4_20"
+            "target_nomi_v4_20", "target_jerome_v4_20", "target_janet_v4_20", "target_ben_v4_20", 
+            "target_alan_v4_20", "target_paul_v4_20", "target_george_v4_20", "target_william_v4_20", 
+            "target_arthur_v4_20", "target_thomas_v4_20"
         ]
         read_columns = features + targets + [ERA_COL, DATA_TYPE_COL]
         training_data = pd.read_parquet('data/train.parquet', columns=read_columns)
         live_data = pd.read_parquet(f'data/live_{self.current_round}.parquet', columns=read_columns)
         
         print(f">>> Preprocessing data ...")
-        aux_targets = [col for col in training_data.columns if col.endswith("_20") and col != "target_nomi_v4_20"]
         main_target = "target_nomi_v4_20"
+        aux_targets = [col for col in training_data.columns if col.endswith("_20") and col != main_target]
         gc.collect()
         
         print(f">>> Loading pre-trained model ...")
         model_list = []
         for t in aux_targets:
             model = load_model(t)
-        model_list.append(model)
+            model_list.append(model)
 
         print(f">>> Creating live predictions ...")
         live_preds_list = []
@@ -224,11 +219,10 @@ class RunModel:
 
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
 
-
     # function to run latest skulls model
     def run_skulls(self, version=0):
         model_name = f"dh_skulls_v{version}"
-        print(f"\nBegin running {model_name} for live round # {self.current_round}...")
+        print(f"\nRunning {model_name} for live round # {self.current_round}...")
         
         print(f">>> Importing data ...")
         with open("data/top_bottom_features.json", "r") as f:
@@ -262,32 +256,34 @@ class RunModel:
         
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
 
-
     # function to run latest desperado model
     def run_desperado(self, version=0):
         model_name = f"dh_desperado_v{version}"
-        print(f"\nBegin running {model_name} for live round # {self.current_round}...")
+        print(f"\nRunning {model_name} for live round # {self.current_round}...")
         
         print(f">>> Importing data ...")
         foxhound_live = pd.read_csv(f"predictions/dh_foxhound_v0_live_preds_{self.current_round}.csv")
         deadcell_live = pd.read_csv(f"predictions/dh_deadcell_v0_live_preds_{self.current_round}.csv")
         cobra_live = pd.read_csv(f"predictions/dh_cobra_v0_live_preds_{self.current_round}.csv")
         beautybeast_live = pd.read_csv(f"predictions/dh_beautybeast_v0_live_preds_{self.current_round}.csv")
+        skulls_live = pd.read_csv(f"predictions/dh_skulls_v0_live_preds_{self.current_round}.csv")
         
         print(f">>> Preprocessing data ...")
         desperado_live = foxhound_live.merge(
             right=deadcell_live, how='inner', on="id", suffixes=('', '2')).merge(
             right=cobra_live, how='inner', on="id", suffixes=('', '3')).merge(
-            right=beautybeast_live, how='inner', on="id", suffixes=('', '4'))
-        desperado_live.columns = ["id", "foxhound", "deadcell", "cobra", "beautybeast"]
+            right=beautybeast_live, how='inner', on="id", suffixes=('', '4')).merge(
+            right=skulls_live, how='inner', on="id", suffixes=('', '5'))
+        desperado_live.columns = ["id", "foxhound", "deadcell", "cobra", "beautybeast", "skulls"]
 
         print(f">>> Creating live predictions ...")
         desperado_live["prediction"] = (
             desperado_live["foxhound"] + 
             desperado_live["deadcell"] + 
             desperado_live["cobra"] +
-            desperado_live["beautybeast"]
-            ) / 4
+            desperado_live["beautybeast"] +
+            desperado_live["skulls"]
+            ) / 5
         gc.collect()
         
         print(f">>> Saving live predictions ...")
