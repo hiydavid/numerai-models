@@ -1,5 +1,5 @@
-__pycache__/utils.cpython-310.pyc
-__pycache__/utils.cpython-39.pyc
+dev/
+utils/.api_keys.py
 data/features.json
 .DS_Store
 *.csv
