@@ -1,8 +1,8 @@
 dev/
-utils/.api_keys.py
 data/features.json
 .DS_Store
 *.csv
 *.parquet
 *.pyc
 *.ipynb_checkpoints
+utils/api_keys.py
