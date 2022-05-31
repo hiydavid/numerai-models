@@ -1,5 +1,6 @@
 dev/
 data/features.json
+data/model_names.json
 .DS_Store
 *.csv
 *.parquet

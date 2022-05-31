@@ -22,8 +22,8 @@ class RunModel:
         self.current_round = current_round
     
     # function to run latest foxhound model
-    def run_foxhound(self, n_neutralize=50, version=0):
-        model_name = f"dh_foxhound_v{version}"
+    def run_foxhound(self, n_neutralize=50):
+        model_name = f"dh_foxhound"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
         print(f">>> Importing data ...")
         with open("data/features.json", "r") as f:
@@ -65,8 +65,8 @@ class RunModel:
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
 
     # function to run latest deadcell model
-    def run_deadcell(self, n_neutralize=5, version=0):
-        model_name = f"dh_deadcell_v{version}"
+    def run_deadcell(self, n_neutralize=5):
+        model_name = f"dh_deadcell"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
         print(f">>> Importing data ...")
         with open("data/features.json", "r") as f:
@@ -108,8 +108,8 @@ class RunModel:
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
 
     # function to run latest cobra model
-    def run_cobra(self, n_neutralize=60, version=0):
-        model_name = f"dh_cobra_v{version}"
+    def run_cobra(self, n_neutralize=60):
+        model_name = f"dh_cobra"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
         print(f">>> Importing data ...")
         with open("data/features.json", "r") as f:
@@ -154,8 +154,8 @@ class RunModel:
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
 
     # function to run latest beautybeast model
-    def run_beautybeast(self, version=0):
-        model_name = f"dh_beautybeast_v{version}"
+    def run_beautybeast(self):
+        model_name = f"dh_beautybeast"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
         print(f">>> Importing data ...")
         with open("data/features.json", "r") as f:
@@ -193,8 +193,8 @@ class RunModel:
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
 
     # function to run latest skulls model
-    def run_skulls(self, version=0):
-        model_name = f"dh_skulls_v{version}"
+    def run_skulls(self):
+        model_name = f"dh_skulls"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
         print(f">>> Importing data ...")
         with open("data/top_bottom_features.json", "r") as f:
@@ -224,15 +224,15 @@ class RunModel:
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
 
     # function to run latest desperado model
-    def run_desperado(self, version=0):
-        model_name = f"dh_desperado_v{version}"
+    def run_desperado(self):
+        model_name = f"dh_desperado"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
         print(f">>> Importing data ...")
-        foxhound_live = pd.read_csv(f"predictions/dh_foxhound_v0_live_preds_{self.current_round}.csv")
-        deadcell_live = pd.read_csv(f"predictions/dh_deadcell_v0_live_preds_{self.current_round}.csv")
-        cobra_live = pd.read_csv(f"predictions/dh_cobra_v0_live_preds_{self.current_round}.csv")
-        beautybeast_live = pd.read_csv(f"predictions/dh_beautybeast_v0_live_preds_{self.current_round}.csv")
-        skulls_live = pd.read_csv(f"predictions/dh_skulls_v0_live_preds_{self.current_round}.csv")
+        foxhound_live = pd.read_csv(f"predictions/dh_foxhound_live_preds_{self.current_round}.csv")
+        deadcell_live = pd.read_csv(f"predictions/dh_deadcell_live_preds_{self.current_round}.csv")
+        cobra_live = pd.read_csv(f"predictions/dh_cobra_live_preds_{self.current_round}.csv")
+        beautybeast_live = pd.read_csv(f"predictions/dh_beautybeast_live_preds_{self.current_round}.csv")
+        skulls_live = pd.read_csv(f"predictions/dh_skulls_live_preds_{self.current_round}.csv")
         print(f">>> Preprocessing data ...")
         desperado_live = foxhound_live.merge(
             right=deadcell_live, how='inner', on="id", suffixes=('', '2')).merge(
