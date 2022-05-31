@@ -1,35 +1,37 @@
 # Models for Numerai Competition
 
 ## Models
-### **Foxhound**: 
+---
+### **LightGBM-Based Models**
+#### Foxhound: 
 * Trained on medium features and main target
-* 50 neuralized
-* LightGBM model
+* 50 features neuralized
 
-### **Deadcell**: 
+#### Deadcell: 
 * Trained on small features and main target
-* 5 neutralized
-* LightGBM model
+* 5 features neutralized
+* *WIP*: Implementing hypermeter tuning
 
-### **Cobra**: 
+#### Cobra: 
 * Trained on rest of the features and main target
-* 60 neutralized
-* LightGBM model
+* 60 features neutralized
 
-### **BeautyBeast**: 
+#### BeautyBeast: 
 * Trained on medium features and auxiliary targets
 * Ensemble output as simple avgeraging
-* Auxiliary models using LightGBM
 
-### **Skulls**:
+#### Skulls:
 * Trained on top 200 and bottom 200 features
 * Top/bottom determined by correlation to target
 * No features neutralized
-* LightGBM model
 
-### **Desperado**: 
+#### Desperado: 
 * Ensemble prediction of all other models
 * Simple averaging
+
+---
+### DNN-Based Models
+
 
 ---
 ## Tracking Results
@@ -45,5 +47,4 @@
 ## Project Roadmap (By June 30th)
 * Finish research issues
 * Complete building out new models
-  1. Build out *Skulls*, an neural network based model trained on all features
-  2. Build a new version of *Desperado* with stacking regressor
+  1. Build a new version of *Desperado* with stacking regressor
