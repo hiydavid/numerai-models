@@ -3,6 +3,9 @@
 ## Models
 ---
 ### **LightGBM-Based Models**
+
+<img width="704" alt="image" src="https://user-images.githubusercontent.com/42119351/171321069-8c5c3822-1cc0-44ed-9523-08d55a794f8b.png">
+
 #### Foxhound: 
 * Trained on medium features and main target
 * 50 features neuralized
