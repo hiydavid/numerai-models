@@ -1,10 +1,9 @@
 # Models for Numerai Competition
 
 ## Models
----
 ### **LightGBM-Based Models**
 
-<img width="704" alt="image" src="https://user-images.githubusercontent.com/42119351/171321069-8c5c3822-1cc0-44ed-9523-08d55a794f8b.png">
+![image](https://user-images.githubusercontent.com/42119351/172032721-b62d2305-b982-485a-9acd-56769a9bc854.png)
 
 #### Foxhound: 
 * Trained on medium features and main target
@@ -32,21 +31,17 @@
 * Ensemble prediction of all other models
 * Simple averaging
 
----
 ### DNN-Based Models
 
 
----
 ## Tracking Results
 * [Model performance](https://numer.ai/models)
 * [Tournament leaderboard](https://numer.ai/tournament)
 
----
 ## Helpful Links
 * [Tournament documentation](https://docs.numer.ai/)
 * [Numerai example script](https://github.com/numerai/example-scripts)
 
----
 ## Project Roadmap (By June 30th)
 * Finish research issues
 * Complete building out new models
