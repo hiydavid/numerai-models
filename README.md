@@ -12,7 +12,6 @@
 #### Deadcell: 
 * Trained on small features and main target
 * 5 features neutralized
-* *WIP*: Implementing hypermeter tuning
 
 #### Cobra: 
 * Trained on rest of the features and main target
@@ -32,6 +31,13 @@
 * Simple averaging
 
 ### DNN-Based Models
+
+#### Gaia
+#### Terra 
+#### Spira
+#### Ivalice
+#### Cocoon
+#### Eos
 
 
 ## Tracking Results
