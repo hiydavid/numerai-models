@@ -6,7 +6,7 @@ import pandas as pd
 import scipy
 from pathlib import Path
 import json
-import scipy
+from scipy.stats import skew
 
 ERA_COL = "era"
 TARGET_COL = "target_nomi_v4_20"
