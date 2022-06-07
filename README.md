@@ -3,7 +3,8 @@
 ## Models
 ### **LightGBM-Based Models**
 
-![image](https://user-images.githubusercontent.com/42119351/172032721-b62d2305-b982-485a-9acd-56769a9bc854.png)
+<img width="706" alt="image" src="https://user-images.githubusercontent.com/42119351/172471486-8150c31e-1280-40fc-9629-37d448c33ad5.png">
+<img width="706" alt="image" src="https://user-images.githubusercontent.com/42119351/172475526-0b9b1ad9-42c9-481b-a3df-90d981f7ab5b.png">
 
 #### Foxhound: 
 * Trained on medium features and main target
