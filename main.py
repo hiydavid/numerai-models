@@ -16,14 +16,19 @@ napi.download_dataset(
     dest_path=f"data/live_{current_round}.parquet"
 )
 
-# run models
-m = RunModel(current_round=current_round)
-m.run_foxhound()
-m.run_deadcell()
-m.run_cobra()
-m.run_beautybeast()
-m.run_skulls()
-m.run_desperado()
+# instantiate model class
+nmr = RunModel(current_round=current_round)
+
+# run lgbm-based models
+nmr.run_foxhound()
+nmr.run_deadcell()
+nmr.run_cobra()
+nmr.run_beautybeast()
+nmr.run_skulls()
+nmr.run_desperado()
+
+# run dnn-based models
+nmr.run_gaia()
 
 # read model name json file
 with open("data/model_names.json", "r") as f:

@@ -254,3 +254,46 @@ class RunModel:
         desperado_live.to_csv(f"predictions/{model_name}_live_preds_{self.current_round}.csv")
         gc.collect()
         print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
+    
+    # function to run latest gaia model
+    def run_gaia(self, n_neutralize=50):
+        model_name = f"dh_gaia"
+        print(f"\nRunning {model_name} for live round # {self.current_round}...")
+        print(f">>> Importing data ...")
+        with open("data/features.json", "r") as f:
+            feature_metadata = json.load(f)
+        features = feature_metadata["feature_sets"]["medium"]
+        read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
+        training_data = pd.read_parquet('data/train.parquet', columns=read_columns)
+        live_data = pd.read_parquet(f'data/live_{self.current_round}.parquet', columns=read_columns)
+        print(f">>> Preprocessing data ...")
+        all_feature_corrs = training_data.groupby(ERA_COL).apply(lambda era: era[features].corrwith(era[TARGET_COL]))
+        riskiest_features = get_biggest_change_features(all_feature_corrs, n_neutralize)
+        nans_per_col = live_data[live_data["data_type"] == "live"].isna().sum()
+        if nans_per_col.any():
+            total_rows = len(live_data[live_data["data_type"] == "live"])
+            live_data.loc[:, features] = live_data.loc[:, features].fillna(0.5)
+        else:
+            pass
+        gc.collect()
+        print(f">>> Loading pre-trained model ...")
+        model = tf.keras.models.load_model(f'models/{model_name}')
+        print(f">>> Creating live predictions ...")
+        live_data.loc[:, f"preds_{model_name}"] = model.predict(live_data.loc[:, features])
+        gc.collect()
+        print(f">>> Neutralizing features ...")
+        live_data[f"preds_{model_name}_neutral_riskiest_{n_neutralize}"] = neutralize(
+            df=live_data,
+            columns=[f"preds_{model_name}"],
+            neutralizers=riskiest_features,
+            proportion=1.0,
+            normalize=True,
+            era_col=ERA_COL
+        )
+        print(f">>> Saving live predictions ...")
+        model_to_submit = f"preds_{model_name}_neutral_riskiest_{n_neutralize}"
+        live_data["prediction"] = live_data[model_to_submit].rank(pct=True)
+        live_data["prediction"].to_csv(f"predictions/{model_name}_live_preds_{self.current_round}.csv")
+        gc.collect()
+        print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
+        pass
