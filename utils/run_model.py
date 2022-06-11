@@ -3,6 +3,7 @@
 # import dependencies
 import pandas as pd
 from lightgbm import LGBMRegressor
+import tensorflow as tf
 import gc
 import json
 from utils.utils import (
@@ -62,7 +63,7 @@ class RunModel:
         live_data["prediction"] = live_data[model_to_submit].rank(pct=True)
         live_data["prediction"].to_csv(f"predictions/{model_name}_live_preds_{self.current_round}.csv")
         gc.collect()
-        print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
+        print(f">>> Model {model_name} run complete!")
 
     # function to run latest deadcell model
     def run_deadcell(self, n_neutralize=5):
@@ -105,7 +106,7 @@ class RunModel:
         live_data["prediction"] = live_data[model_to_submit].rank(pct=True)
         live_data["prediction"].to_csv(f"predictions/{model_name}_live_preds_{self.current_round}.csv")
         gc.collect()
-        print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
+        print(f">>> Model {model_name} run complete!")
 
     # function to run latest cobra model
     def run_cobra(self, n_neutralize=60):
@@ -151,7 +152,7 @@ class RunModel:
         live_data["prediction"] = live_data[model_to_submit].rank(pct=True)
         live_data["prediction"].to_csv(f"predictions/{model_name}_live_preds_{self.current_round}.csv")
         gc.collect()
-        print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
+        print(f">>> Model {model_name} run complete!")
 
     # function to run latest beautybeast model
     def run_beautybeast(self):
@@ -190,7 +191,7 @@ class RunModel:
         live_preds = pd.DataFrame(live_preds_avg_ranked).rename(columns={0:"prediction"}).set_index(live_data.index)
         live_preds.to_csv(f"predictions/{model_name}_live_preds_{self.current_round}.csv")
         gc.collect()
-        print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
+        print(f">>> Model {model_name} run complete!")
 
     # function to run latest skulls model
     def run_skulls(self):
@@ -221,7 +222,7 @@ class RunModel:
         live_data["prediction"] = live_data[model_to_submit].rank(pct=True)
         live_data["prediction"].to_csv(f"predictions/{model_name}_live_preds_{self.current_round}.csv")
         gc.collect()
-        print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
+        print(f">>> Model {model_name} run complete!")
 
     # function to run latest desperado model
     def run_desperado(self):
@@ -253,7 +254,7 @@ class RunModel:
         desperado_live = desperado_live[["id", "prediction"]].set_index("id")
         desperado_live.to_csv(f"predictions/{model_name}_live_preds_{self.current_round}.csv")
         gc.collect()
-        print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
+        print(f">>> Model {model_name} run complete!")
     
     # function to run latest gaia model
     def run_gaia(self, n_neutralize=50):
@@ -277,9 +278,12 @@ class RunModel:
             pass
         gc.collect()
         print(f">>> Loading pre-trained model ...")
-        model = tf.keras.models.load_model(f'models/{model_name}')
-        print(f">>> Creating live predictions ...")
-        live_data.loc[:, f"preds_{model_name}"] = model.predict(live_data.loc[:, features])
+        model = tf.keras.models.load_model(f'models/{model_name}.h5')
+        if model.get_config()["layers"][0]["config"]["batch_input_shape"][1] == len(features):
+            print(f">>> Creating live predictions ...")
+            live_data.loc[:, f"preds_{model_name}"] = model.predict(live_data.loc[:, features])
+        else:
+            print("Model features and data features mismatched! Consider retraining the model")
         gc.collect()
         print(f">>> Neutralizing features ...")
         live_data[f"preds_{model_name}_neutral_riskiest_{n_neutralize}"] = neutralize(
@@ -295,5 +299,5 @@ class RunModel:
         live_data["prediction"] = live_data[model_to_submit].rank(pct=True)
         live_data["prediction"].to_csv(f"predictions/{model_name}_live_preds_{self.current_round}.csv")
         gc.collect()
-        print(f">>> Model {model_name} run complete for live round # {self.current_round}!")
+        print(f">>> Model {model_name} run complete!")
         pass
