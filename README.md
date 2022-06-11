@@ -34,6 +34,10 @@
 ### DNN-Based Models
 
 #### Gaia
+* MLP with 4 layers, with 472, 235, 118, 59 units each respectively
+* Trained on medium features and main target
+* 50 features neuralized
+
 #### Terra 
 #### Spira
 #### Ivalice
