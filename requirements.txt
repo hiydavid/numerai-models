@@ -1,7 +1,8 @@
 ### install the following
-numerapi
-lightgbm
-xgboost
+numerapi==2.11.0
+lightgbm==3.3.0
+xgboost==1.6.0
 pyarrow
 fastparquet
-yfinance
+yfinance==0.1.70
+tensorflow==2.9.0
