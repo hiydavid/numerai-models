@@ -226,6 +226,9 @@ class RunModel:
 
     # function to run latest desperado model
     def run_desperado(self):
+        """
+        DEPRECATED
+        """
         model_name = f"dh_desperado"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
         print(f">>> Importing data ...")
@@ -253,6 +256,36 @@ class RunModel:
         print(f">>> Saving live predictions ...")
         desperado_live = desperado_live[["id", "prediction"]].set_index("id")
         desperado_live.to_csv(f"predictions/{model_name}_live_preds_{self.current_round}.csv")
+        gc.collect()
+        print(f">>> Model {model_name} run complete!")
+    
+    # function to run latest desperadov2 model
+    def run_desperadov2(self):
+        model_name = f"dh_desperadov2"
+        print(f"\nRunning {model_name} for live round # {self.current_round}...")
+        print(f">>> Importing data ...")
+        foxhound_live = pd.read_csv(f"predictions/dh_foxhound_live_preds_{self.current_round}.csv")
+        deadcell_live = pd.read_csv(f"predictions/dh_deadcell_live_preds_{self.current_round}.csv")
+        cobra_live = pd.read_csv(f"predictions/dh_cobra_live_preds_{self.current_round}.csv")
+        beautybeast_live = pd.read_csv(f"predictions/dh_beautybeast_live_preds_{self.current_round}.csv")
+        skulls_live = pd.read_csv(f"predictions/dh_skulls_live_preds_{self.current_round}.csv")
+        print(f">>> Preprocessing data ...")
+        live_data = foxhound_live.merge(
+            right=deadcell_live, how='inner', on="id", suffixes=('', '2')).merge(
+            right=cobra_live, how='inner', on="id", suffixes=('', '3')).merge(
+            right=beautybeast_live, how='inner', on="id", suffixes=('', '4')).merge(
+            right=skulls_live, how='inner', on="id", suffixes=('', '5'))
+        live_data.columns = ["id", "foxhound", "deadcell", "cobra", "beautybeast", "skulls"]
+        gc.collect()
+        print(f">>> Loading pre-trained model ...")
+        model = load_model(model_name)
+        model_expected_features = model.booster_.feature_name()
+        print(f">>> Creating live predictions ...")
+        live_data.loc[:, f"prediction"] = model.predict(live_data.loc[:, model_expected_features])
+        gc.collect()
+        print(f">>> Saving live predictions ...")
+        live_data = live_data[["id", "prediction"]].set_index("id")
+        live_data.to_csv(f"predictions/{model_name}_live_preds_{self.current_round}.csv")
         gc.collect()
         print(f">>> Model {model_name} run complete!")
     
