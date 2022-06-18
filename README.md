@@ -29,7 +29,8 @@
 
 #### Desperado: 
 * Ensemble prediction of all other models
-* Simple averaging
+* v1 using simple averaging
+* v2 using LightGBM, trained on 50% of combined validation set
 
 ### DNN-Based Models
 
@@ -49,11 +50,7 @@
 * [Model performance](https://numer.ai/models)
 * [Tournament leaderboard](https://numer.ai/tournament)
 
-## Helpful Links
-* [Tournament documentation](https://docs.numer.ai/)
-* [Numerai example script](https://github.com/numerai/example-scripts)
-
-## Project Roadmap (By June 30th)
-* Finish research issues
-* Complete building out new models
-  1. Build a new version of *Desperado* with stacking regressor
+## Project Roadmap (By 2022/12/31)
+* Create and implement a model using DCN architecture
+* Create and implement a model using numeric embedding of features
+* Create and implement a model using attention-based architecture
