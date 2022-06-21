@@ -6,3 +6,4 @@ data/model_names.json
 *.pyc
 *.ipynb_checkpoints
 utils/api_keys.py
+*.idea

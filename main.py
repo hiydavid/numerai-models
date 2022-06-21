@@ -1,5 +1,4 @@
 # load libraries
-import pandas as pd
 import json
 from numerapi import NumerAPI
 from utils.api_keys import PUBLIC_ID, SECRET_KEY
@@ -10,7 +9,7 @@ napi = NumerAPI(public_id=PUBLIC_ID, secret_key=SECRET_KEY)
 current_round = napi.get_current_round()
 print(f"Starting round #: {current_round}")
 
-# donwload live dataset
+# download live dataset
 napi.download_dataset(
     filename="v4/live.parquet", 
     dest_path=f"data/live_{current_round}.parquet"
@@ -19,13 +18,13 @@ napi.download_dataset(
 # instantiate model class
 nmr = RunModel(current_round=current_round)
 
-# run lgbm-based models
+# run lightgbm-based models
 nmr.run_foxhound()
 nmr.run_deadcell()
 nmr.run_cobra()
 nmr.run_beautybeast()
 nmr.run_skulls()
-# nmr.run_desperado()
+nmr.run_desperado()
 
 # run dnn-based models
 nmr.run_gaia()
