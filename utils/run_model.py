@@ -1,8 +1,5 @@
-### Run Latest Foxhound Model
-
 # import dependencies
 import pandas as pd
-from lightgbm import LGBMRegressor
 import tensorflow as tf
 import gc
 import json
@@ -15,6 +12,7 @@ from utils.utils import (
     TARGET_COL,
 )
 
+
 # run model class
 class RunModel:
     
@@ -22,7 +20,7 @@ class RunModel:
     def __init__(self, current_round):
         self.current_round = current_round
     
-    # function to run latest foxhound model
+    # function to run the foxhound model
     def run_foxhound(self, n_neutralize=50):
         model_name = f"dh_foxhound"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
@@ -38,7 +36,6 @@ class RunModel:
         riskiest_features = get_biggest_change_features(all_feature_corrs, n_neutralize)
         nans_per_col = live_data[live_data["data_type"] == "live"].isna().sum()
         if nans_per_col.any():
-            total_rows = len(live_data[live_data["data_type"] == "live"])
             live_data.loc[:, features] = live_data.loc[:, features].fillna(0.5)
         else:
             pass
@@ -65,7 +62,7 @@ class RunModel:
         gc.collect()
         print(f">>> Model {model_name} run complete!")
 
-    # function to run latest deadcell model
+    # function to run the deadcell model
     def run_deadcell(self, n_neutralize=5):
         model_name = f"dh_deadcell"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
@@ -81,7 +78,6 @@ class RunModel:
         riskiest_features = get_biggest_change_features(all_feature_corrs, n_neutralize)
         nans_per_col = live_data[live_data["data_type"] == "live"].isna().sum()
         if nans_per_col.any():
-            total_rows = len(live_data[live_data["data_type"] == "live"])
             live_data.loc[:, features] = live_data.loc[:, features].fillna(0.5)
         else:
             pass
@@ -108,7 +104,7 @@ class RunModel:
         gc.collect()
         print(f">>> Model {model_name} run complete!")
 
-    # function to run latest cobra model
+    # function to run the cobra model
     def run_cobra(self, n_neutralize=60):
         model_name = f"dh_cobra"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
@@ -127,7 +123,6 @@ class RunModel:
         riskiest_features = get_biggest_change_features(all_feature_corrs, n_neutralize)
         nans_per_col = live_data[live_data["data_type"] == "live"].isna().sum()
         if nans_per_col.any():
-            total_rows = len(live_data[live_data["data_type"] == "live"])
             live_data.loc[:, features] = live_data.loc[:, features].fillna(0.5)
         else:
             pass
@@ -154,7 +149,7 @@ class RunModel:
         gc.collect()
         print(f">>> Model {model_name} run complete!")
 
-    # function to run latest beautybeast model
+    # function to run the beautybeast model
     def run_beautybeast(self):
         model_name = f"dh_beautybeast"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
@@ -182,18 +177,18 @@ class RunModel:
         print(f">>> Creating live predictions ...")
         live_preds_list = []
         for t, m in zip(aux_targets, model_list):
-            live_preds = pd.DataFrame(m.predict(live_data[features])).rename(columns={0:f"{t}"})
+            live_preds = pd.DataFrame(m.predict(live_data[features])).rename(columns={0: f"{t}"})
             live_preds_list.append(live_preds)
         live_preds_all = pd.concat(live_preds_list, axis=1)
         live_preds_avg_ranked = live_preds_all.mean(axis=1).rank(pct=True, method="first")
         gc.collect()
         print(f">>> Saving live predictions ...")
-        live_preds = pd.DataFrame(live_preds_avg_ranked).rename(columns={0:"prediction"}).set_index(live_data.index)
+        live_preds = pd.DataFrame(live_preds_avg_ranked).rename(columns={0: "prediction"}).set_index(live_data.index)
         live_preds.to_csv(f"predictions/{model_name}_live_preds_{self.current_round}.csv")
         gc.collect()
         print(f">>> Model {model_name} run complete!")
 
-    # function to run latest skulls model
+    # function to run the skulls model
     def run_skulls(self):
         model_name = f"dh_skulls"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
@@ -206,7 +201,6 @@ class RunModel:
         print(f">>> Preprocessing data ...")
         nans_per_col = live_data[live_data["data_type"] == "live"].isna().sum()
         if nans_per_col.any():
-            total_rows = len(live_data[live_data["data_type"] == "live"])
             live_data.loc[:, features] = live_data.loc[:, features].fillna(0.5)
         else:
             pass
@@ -224,11 +218,8 @@ class RunModel:
         gc.collect()
         print(f">>> Model {model_name} run complete!")
 
-    # function to run latest desperado model
+    # function to run the desperado model
     def run_desperado(self):
-        """
-        DEPRECATED
-        """
         model_name = f"dh_desperado"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
         print(f">>> Importing data ...")
@@ -259,8 +250,11 @@ class RunModel:
         gc.collect()
         print(f">>> Model {model_name} run complete!")
     
-    # function to run latest desperadov2 model
+    # function to run the desperadov2 model
     def run_desperadov2(self):
+        """
+        # In dev, not ready.
+        """
         model_name = f"dh_desperadov2"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
         print(f">>> Importing data ...")
@@ -289,7 +283,7 @@ class RunModel:
         gc.collect()
         print(f">>> Model {model_name} run complete!")
     
-    # function to run latest gaia model
+    # function to run the gaia model
     def run_gaia(self, n_neutralize=50):
         model_name = f"dh_gaia"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
@@ -305,7 +299,6 @@ class RunModel:
         riskiest_features = get_biggest_change_features(all_feature_corrs, n_neutralize)
         nans_per_col = live_data[live_data["data_type"] == "live"].isna().sum()
         if nans_per_col.any():
-            total_rows = len(live_data[live_data["data_type"] == "live"])
             live_data.loc[:, features] = live_data.loc[:, features].fillna(0.5)
         else:
             pass
