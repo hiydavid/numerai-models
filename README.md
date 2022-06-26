@@ -3,8 +3,8 @@
 ## Models
 ### **LightGBM-Based Models**
 
-<img width="706" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/CorrRankPlots.pdf">
-<img width="706" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/PayoutPlots.pdf">
+<img width="706" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/CorrRankPlots.png">
+<img width="706" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/PayoutPlots.png">
 
 #### Foxhound: 
 * Trained on medium features and main target
