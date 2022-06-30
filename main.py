@@ -28,6 +28,7 @@ nmr.run_desperado()
 
 # run dnn-based models
 nmr.run_gaia()
+nmr.run_terra()
 
 # read model name json file
 with open("data/model_names.json", "r") as f:

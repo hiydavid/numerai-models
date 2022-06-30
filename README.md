@@ -39,7 +39,12 @@
 * Trained on medium features and main target
 * 50 features neuralized
 
-#### Terra 
+#### Terra
+* MLP with 2 layers, with 472, 236 units each respectively
+* Added a feature crossing layer with batch normalization
+* Trained on medium features and main target
+* 50 features neuralized
+
 #### Spira
 #### Ivalice
 #### Cocoon
