@@ -283,6 +283,32 @@ class RunModel:
         gc.collect()
         print(f">>> Model {model_name} run complete!")
     
+    # function to run the desperado model
+    def run_desperadov3(self):
+        model_name = f"dh_desperado"
+        print(f"\nRunning {model_name} for live round # {self.current_round}...")
+        print(f">>> Importing data ...")
+        foxhound_live = pd.read_csv(f"predictions/dh_foxhound_live_preds_{self.current_round}.csv")
+        deadcell_live = pd.read_csv(f"predictions/dh_deadcell_live_preds_{self.current_round}.csv")
+        cobra_live = pd.read_csv(f"predictions/dh_cobra_live_preds_{self.current_round}.csv")
+        beautybeast_live = pd.read_csv(f"predictions/dh_beautybeast_live_preds_{self.current_round}.csv")
+        skulls_live = pd.read_csv(f"predictions/dh_skulls_live_preds_{self.current_round}.csv")
+        print(f">>> Preprocessing data ...")
+        desperado_live = foxhound_live.merge(
+            right=deadcell_live, how='inner', on="id", suffixes=('', '2')).merge(
+            right=cobra_live, how='inner', on="id", suffixes=('', '3')).merge(
+            right=beautybeast_live, how='inner', on="id", suffixes=('', '4')).merge(
+            right=skulls_live, how='inner', on="id", suffixes=('', '5'))
+        desperado_live.columns = ["id", "foxhound", "deadcell", "cobra", "beautybeast", "skulls"]
+        print(f">>> Creating live predictions ...")
+        desperado_live["prediction"] = desperado_live[["foxhound", "cobra"]].mean(axis=1)
+        gc.collect()
+        print(f">>> Saving live predictions ...")
+        desperado_live = desperado_live[["id", "prediction"]].set_index("id")
+        desperado_live.to_csv(f"predictions/{model_name}_live_preds_{self.current_round}.csv")
+        gc.collect()
+        print(f">>> Model {model_name} run complete!")
+    
     # function to run the gaia model
     def run_gaia(self, n_neutralize=50):
         model_name = f"dh_gaia"

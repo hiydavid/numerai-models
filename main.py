@@ -24,7 +24,7 @@ nmr.run_deadcell()
 nmr.run_cobra()
 nmr.run_beautybeast()
 nmr.run_skulls()
-nmr.run_desperado()
+nmr.run_desperadov3()
 
 # run dnn-based models
 nmr.run_gaia()
