@@ -31,6 +31,7 @@
 * Ensemble prediction of all other models
 * v1 using simple averaging
 * v2 using LightGBM, trained on 50% of combined validation set
+* v3 using simple averaging but only include Foxhound and Cobra predictions
 
 ### DNN-Based Models
 
