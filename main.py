@@ -22,7 +22,7 @@ nmr = RunModel(current_round=current_round)
 nmr.run_foxhound()
 nmr.run_deadcell()
 nmr.run_cobra()
-nmr.run_beautybeast()
+nmr.run_beautybeastv2()
 nmr.run_skulls()
 nmr.run_desperadov3()
 
