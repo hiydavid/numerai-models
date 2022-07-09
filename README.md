@@ -1,11 +1,13 @@
 # Models for Numerai Competition
 
-## Models
-### **LightGBM-Based Models**
-
+## Performance
+<img width="706" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/ModelCorrPlots.png">
 <img width="706" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/CorrRankPlots.png">
 <img width="706" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/PayoutPlots.png">
+<img width="706" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/TotalReturnPlots.png">
 
+## Models
+### **LightGBM-Based Models**
 #### Foxhound: 
 * Trained on medium features and main target
 * 50 features neuralized
@@ -33,8 +35,7 @@
 * v2 using LightGBM, trained on 50% of combined validation set
 * v3 using simple averaging but only include Foxhound and Cobra predictions
 
-### DNN-Based Models
-
+### **DNN-Based Models**
 #### Gaia
 * MLP with 4 layers, with 472, 235, 118, 59 units each respectively
 * Trained on medium features and main target
