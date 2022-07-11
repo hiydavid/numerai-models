@@ -21,8 +21,8 @@
 * 60 features neutralized
 
 #### BeautyBeast: 
-* Trained on medium features and auxiliary targets
-* Ensemble output as simple avgeraging
+* Trained on top 500 features by f-stats
+* No features neutralized
 
 #### Skulls:
 * Trained on top 200 and bottom 200 features
