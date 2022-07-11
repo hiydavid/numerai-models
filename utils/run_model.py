@@ -24,7 +24,7 @@ class RunModel:
     # get data
     def get_data(self):
         self.training_data = pd.read_parquet('data/train.parquet')
-        self.live_data = pd.read_parquet(f'data/live_{self.current_round}.parquet')
+        self.live_data = pd.read_parquet(f'data/live_{self.current_round}.parquet').fillna(0.5)
     
     # function to run the foxhound model
     def run_foxhound(self, n_neutralize=50):
@@ -42,11 +42,6 @@ class RunModel:
             lambda era: era[features].corrwith(era[TARGET_COL])
         )
         riskiest_features = get_biggest_change_features(all_feature_corrs, n_neutralize)
-        nans_per_col = live_data[live_data["data_type"] == "live"].isna().sum()
-        if nans_per_col.any():
-            live_data.loc[:, features] = live_data.loc[:, features].fillna(0.5)
-        else:
-            pass
         gc.collect()
         print(f">>> Loading model & creating live predictions ...")
         model = load_model(model_name)
@@ -84,11 +79,6 @@ class RunModel:
             lambda era: era[features].corrwith(era[TARGET_COL])
         )
         riskiest_features = get_biggest_change_features(all_feature_corrs, n_neutralize)
-        nans_per_col = live_data[live_data["data_type"] == "live"].isna().sum()
-        if nans_per_col.any():
-            live_data.loc[:, features] = live_data.loc[:, features].fillna(0.5)
-        else:
-            pass
         gc.collect()
         print(f">>> Loading model & creating live predictions ...")
         model = load_model(model_name)
@@ -129,11 +119,6 @@ class RunModel:
             lambda era: era[features].corrwith(era[TARGET_COL])
         )
         riskiest_features = get_biggest_change_features(all_feature_corrs, n_neutralize)
-        nans_per_col = live_data[live_data["data_type"] == "live"].isna().sum()
-        if nans_per_col.any():
-            live_data.loc[:, features] = live_data.loc[:, features].fillna(0.5)
-        else:
-            pass
         gc.collect()
         print(f">>> Loading model & creating live predictions ...")
         model = load_model(model_name)
@@ -165,12 +150,6 @@ class RunModel:
         features = top_fstats_features["top_500_features"]
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         live_data = self.live_data.loc[:, read_columns]
-        print(f">>> Preprocessing data ...")
-        nans_per_col = live_data[live_data["data_type"] == "live"].isna().sum()
-        if nans_per_col.any():
-            live_data.loc[:, features] = live_data.loc[:, features].fillna(0.5)
-        else:
-            pass
         gc.collect()
         print(f">>> Loading model & creating live predictions ...")
         model = load_model(model_name)
@@ -193,12 +172,6 @@ class RunModel:
         features = top_bottom_features["top_features"] + top_bottom_features["bottom_features"]
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         live_data = self.live_data.loc[:, read_columns]
-        print(f">>> Preprocessing data ...")
-        nans_per_col = live_data[live_data["data_type"] == "live"].isna().sum()
-        if nans_per_col.any():
-            live_data.loc[:, features] = live_data.loc[:, features].fillna(0.5)
-        else:
-            pass
         gc.collect()
         print(f">>> Loading model & creating live predictions ...")
         model = load_model(model_name)
@@ -277,10 +250,7 @@ class RunModel:
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
         print(f">>> Importing data ...")
         foxhound_live = pd.read_csv(f"predictions/dh_foxhound_live_preds_{self.current_round}.csv")
-        deadcell_live = pd.read_csv(f"predictions/dh_deadcell_live_preds_{self.current_round}.csv")
         cobra_live = pd.read_csv(f"predictions/dh_cobra_live_preds_{self.current_round}.csv")
-        beautybeast_live = pd.read_csv(f"predictions/dh_beautybeast_live_preds_{self.current_round}.csv")
-        skulls_live = pd.read_csv(f"predictions/dh_skulls_live_preds_{self.current_round}.csv")
         print(f">>> Preprocessing data ...")
         features = ["foxhound", "cobra"]
         desperado_live = foxhound_live.merge(right=cobra_live, how='inner', on="id", suffixes=('', '2'))
@@ -310,11 +280,6 @@ class RunModel:
             lambda era: era[features].corrwith(era[TARGET_COL])
         )
         riskiest_features = get_biggest_change_features(all_feature_corrs, n_neutralize)
-        nans_per_col = live_data[live_data["data_type"] == "live"].isna().sum()
-        if nans_per_col.any():
-            live_data.loc[:, features] = live_data.loc[:, features].fillna(0.5)
-        else:
-            pass
         gc.collect()
         print(f">>> Loading model & creating live predictions ...")
         model = tf.keras.models.load_model(f'models/{model_name}.h5')
@@ -352,11 +317,6 @@ class RunModel:
             lambda era: era[features].corrwith(era[TARGET_COL])
         )
         riskiest_features = get_biggest_change_features(all_feature_corrs, n_neutralize)
-        nans_per_col = live_data[live_data["data_type"] == "live"].isna().sum()
-        if nans_per_col.any():
-            live_data.loc[:, features] = live_data.loc[:, features].fillna(0.5)
-        else:
-            pass
         gc.collect()
         print(f">>> Loading model & creating live predictions ...")
         model = tf.keras.models.load_model(f'models/{model_name}.h5')
