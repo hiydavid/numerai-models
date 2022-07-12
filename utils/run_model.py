@@ -26,18 +26,54 @@ class RunModel:
         self.training_data = pd.read_parquet('data/train.parquet')
         self.live_data = pd.read_parquet(f'data/live_{self.current_round}.parquet').fillna(0.5)
     
+    # get freature names
+    def get_features(self, get):
+
+        if get == "all":
+            with open("data/features.json", "r") as f:
+                _features = json.load(f)
+            return list(_features["feature_stats"].keys())
+
+        elif get == "medium":
+            with open("data/features.json", "r") as f:
+                _features = json.load(f)
+            return _features["feature_sets"]["medium"]
+
+        elif get == "small":
+            with open("data/features.json", "r") as f:
+                _features = json.load(f)
+            return _features["feature_sets"]["small"]
+
+        elif get == "other":
+            with open("data/features.json", "r") as f:
+                _features = json.load(f)
+            small = _features["feature_sets"]["small"]
+            medium = _features["feature_sets"]["medium"]
+            all = list(_features["feature_stats"].keys())
+            return [x for x in all if x not in small and x not in medium]
+
+        elif get == "fstats_500":
+            with open("data/top_fstats_features.json", "r") as f:
+                _features = json.load(f)
+            return _features["top_500_features"]
+        
+        elif get == "top_bottom":
+            with open("data/top_bottom_features.json", "r") as f:
+                _features = json.load(f)
+            return _features["top_features"] + _features["bottom_features"]
+        
+        else:
+            print("ERROR: Features list do not exist!")
+
     # function to run the foxhound model
     def run_foxhound(self, n_neutralize=50):
         model_name = f"dh_foxhound"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
-        print(f">>> Importing data ...")
-        with open("data/features.json", "r") as f:
-            feature_metadata = json.load(f)
-        features = feature_metadata["feature_sets"]["medium"]
+        print(f">>> Importing & preprocessing data ...")
+        features = self.get_features(get="medium")
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         training_data = self.training_data.loc[:, read_columns]
         live_data = self.live_data.loc[:, read_columns]
-        print(f">>> Preprocessing data ...")
         all_feature_corrs = training_data.groupby(ERA_COL).apply(
             lambda era: era[features].corrwith(era[TARGET_COL])
         )
@@ -67,14 +103,11 @@ class RunModel:
     def run_deadcell(self, n_neutralize=5):
         model_name = f"dh_deadcell"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
-        print(f">>> Importing data ...")
-        with open("data/features.json", "r") as f:
-            feature_metadata = json.load(f)
-        features = feature_metadata["feature_sets"]["small"]
+        print(f">>> Importing & preprocessing data ...")
+        features = self.get_features(get="small")
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         training_data = self.training_data.loc[:, read_columns]
         live_data = self.live_data.loc[:, read_columns]
-        print(f">>> Preprocessing data ...")
         all_feature_corrs = training_data.groupby(ERA_COL).apply(
             lambda era: era[features].corrwith(era[TARGET_COL])
         )
@@ -104,17 +137,11 @@ class RunModel:
     def run_cobra(self, n_neutralize=60):
         model_name = f"dh_cobra"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
-        print(f">>> Importing data ...")
-        with open("data/features.json", "r") as f:
-            feature_metadata = json.load(f)
-        small_features = feature_metadata["feature_sets"]["small"]
-        medium_features = feature_metadata["feature_sets"]["medium"]
-        all_features = list(feature_metadata["feature_stats"].keys())
-        features = [x for x in all_features if x not in small_features and x not in medium_features]
+        print(f">>> Importing & preprocessing data ...")
+        features = self.get_features(get="other")
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         training_data = self.training_data.loc[:, read_columns]
         live_data = self.live_data.loc[:, read_columns]
-        print(f">>> Preprocessing data ...")
         all_feature_corrs = training_data.groupby(ERA_COL).apply(
             lambda era: era[features].corrwith(era[TARGET_COL])
         )
@@ -144,10 +171,8 @@ class RunModel:
     def run_beautybeast(self):
         model_name = f"dh_beautybeast"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
-        print(f">>> Importing data ...")
-        with open("data/top_fstats_features.json", "r") as f:
-            top_fstats_features = json.load(f)
-        features = top_fstats_features["top_500_features"]
+        print(f">>> Importing & preprocessing data ...")
+        features = self.get_features(get="fstats_500")
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         live_data = self.live_data.loc[:, read_columns]
         gc.collect()
@@ -166,10 +191,8 @@ class RunModel:
     def run_skulls(self):
         model_name = f"dh_skulls"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
-        print(f">>> Importing data ...")
-        with open("data/top_bottom_features.json", "r") as f:
-            top_bottom_features = json.load(f)
-        features = top_bottom_features["top_features"] + top_bottom_features["bottom_features"]
+        print(f">>> Importing & preprocessing data ...")
+        features = self.get_features(get="top_bottom")
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         live_data = self.live_data.loc[:, read_columns]
         gc.collect()
@@ -188,13 +211,12 @@ class RunModel:
     def run_desperado(self):
         model_name = f"dh_desperado"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
-        print(f">>> Importing data ...")
+        print(f">>> Importing & preprocessing data ...")
         foxhound_live = pd.read_csv(f"predictions/dh_foxhound_live_preds_{self.current_round}.csv")
         deadcell_live = pd.read_csv(f"predictions/dh_deadcell_live_preds_{self.current_round}.csv")
         cobra_live = pd.read_csv(f"predictions/dh_cobra_live_preds_{self.current_round}.csv")
         beautybeast_live = pd.read_csv(f"predictions/dh_beautybeast_live_preds_{self.current_round}.csv")
         skulls_live = pd.read_csv(f"predictions/dh_skulls_live_preds_{self.current_round}.csv")
-        print(f">>> Preprocessing data ...")
         features = ["foxhound", "deadcell", "cobra", "beautybeast", "skulls"]
         desperado_live = foxhound_live.merge(
             right=deadcell_live, how='inner', on="id", suffixes=('', '2')).merge(
@@ -218,13 +240,12 @@ class RunModel:
         """
         model_name = f"dh_desperadov2"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
-        print(f">>> Importing data ...")
+        print(f">>> Importing & preprocessing data ...")
         foxhound_live = pd.read_csv(f"predictions/dh_foxhound_live_preds_{self.current_round}.csv")
         deadcell_live = pd.read_csv(f"predictions/dh_deadcell_live_preds_{self.current_round}.csv")
         cobra_live = pd.read_csv(f"predictions/dh_cobra_live_preds_{self.current_round}.csv")
         beautybeast_live = pd.read_csv(f"predictions/dh_beautybeast_live_preds_{self.current_round}.csv")
         skulls_live = pd.read_csv(f"predictions/dh_skulls_live_preds_{self.current_round}.csv")
-        print(f">>> Preprocessing data ...")
         features = ["foxhound", "deadcell", "cobra", "beautybeast", "skulls"]
         live_data = foxhound_live.merge(
             right=deadcell_live, how='inner', on="id", suffixes=('', '2')).merge(
@@ -248,10 +269,9 @@ class RunModel:
     def run_desperadov3(self):
         model_name = f"dh_desperado"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
-        print(f">>> Importing data ...")
+        print(f">>> Importing & preprocessing data ...")
         foxhound_live = pd.read_csv(f"predictions/dh_foxhound_live_preds_{self.current_round}.csv")
         cobra_live = pd.read_csv(f"predictions/dh_cobra_live_preds_{self.current_round}.csv")
-        print(f">>> Preprocessing data ...")
         features = ["foxhound", "cobra"]
         desperado_live = foxhound_live.merge(right=cobra_live, how='inner', on="id", suffixes=('', '2'))
         desperado_live.columns = ["id"] + features
@@ -268,14 +288,11 @@ class RunModel:
     def run_gaia(self, n_neutralize=50):
         model_name = f"dh_gaia"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
-        print(f">>> Importing data ...")
-        with open("data/features.json", "r") as f:
-            feature_metadata = json.load(f)
-        features = feature_metadata["feature_sets"]["medium"]
+        print(f">>> Importing & preprocessing data ...")
+        features = self.get_features(get="medium")
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         training_data = self.training_data.loc[:, read_columns]
         live_data = self.live_data.loc[:, read_columns]
-        print(f">>> Preprocessing data ...")
         all_feature_corrs = training_data.groupby(ERA_COL).apply(
             lambda era: era[features].corrwith(era[TARGET_COL])
         )
@@ -305,14 +322,11 @@ class RunModel:
     def run_terra(self, n_neutralize=50):
         model_name = f"dh_terra"
         print(f"\nRunning {model_name} for live round # {self.current_round}...")
-        print(f">>> Importing data ...")
-        with open("data/features.json", "r") as f:
-            feature_metadata = json.load(f)
-        features = feature_metadata["feature_sets"]["medium"]
+        print(f">>> Importing & preprocessing data ...")
+        features = self.get_features(get="medium")
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         training_data = self.training_data.loc[:, read_columns]
         live_data = self.live_data.loc[:, read_columns]
-        print(f">>> Preprocessing data ...")
         all_feature_corrs = training_data.groupby(ERA_COL).apply(
             lambda era: era[features].corrwith(era[TARGET_COL])
         )
