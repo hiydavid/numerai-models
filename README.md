@@ -1,11 +1,11 @@
 # Models for Numerai Competition
 
 ## Performance
-<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/ModelCorrPlots.png">
-<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/CorrRankPlots.png">
-<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/PayoutPlots.png">
-<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/TotalReturnPlots.png">
-<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/CorrSharpeRatioPlots.png">
+<img width="750" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/ModelCorrPlots.png">
+<img width="750" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/CorrRankPlots.png">
+<img width="750" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/PayoutPlots.png">
+<img width="750" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/TotalReturnPlots.png">
+<img width="750" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/CorrSharpeRatioPlots.png">
 
 ## Models
 ### **LightGBM-Based Models**
