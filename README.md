@@ -5,7 +5,7 @@
 <img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/CorrRankPlots.png">
 <img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/PayoutPlots.png">
 <img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/TotalReturnPlots.png">
-<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/CorrSharpeRatioPlots.png">
+<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/SharpeRatioPlots.png">
 
 ## Models
 ### **LightGBM-Based Models**
