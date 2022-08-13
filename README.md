@@ -2,10 +2,10 @@
 
 ## Performance
 <img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/ModelCorrPlots.png">
+<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/ModelTCPlots.png">
 <img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/CorrRankPlots.png">
-<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/PayoutPlots.png">
-<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/TotalReturnPlots.png">
 <img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/SharpeRatioPlots.png">
+<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/TotalReturnPlots.png">
 
 ## Models
 ### **LightGBM-Based Models**
@@ -59,6 +59,5 @@
 * [Tournament leaderboard](https://numer.ai/tournament)
 
 ## Project Roadmap (By 2022/12/31)
-* Create and implement a model using DCN architecture
 * Create and implement a model using numeric embedding of features
 * Create and implement a model using attention-based architecture
