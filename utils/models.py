@@ -108,7 +108,7 @@ class RunModel:
         )
         model_to_submit = f"preds_{model_name}_with_neutralization"
         self.save_prediction(model_name, inference_data, model_to_submit)
-        print(f">>> Model {model_name} run complete!")
+        print(f"...model run complete!")
 
     # function to run the deadcell model
     def run_deadcell(self):
@@ -130,7 +130,7 @@ class RunModel:
         )
         model_to_submit = f"preds_{model_name}_with_neutralization"
         self.save_prediction(model_name, inference_data, model_to_submit)
-        print(f">>> Model {model_name} run complete!")
+        print(f"...model run complete!")
 
     # function to run the cobra model
     def run_cobra(self):
@@ -152,7 +152,7 @@ class RunModel:
         )
         model_to_submit = f"preds_{model_name}_with_neutralization"
         self.save_prediction(model_name, inference_data, model_to_submit)
-        print(f">>> Model {model_name} run complete!")
+        print(f"...model run complete!")
     
     # function to run the beautybeast model
     def run_beautybeast(self):
@@ -165,7 +165,7 @@ class RunModel:
         inference_data.loc[:, f"preds_{model_name}"] = model.predict(inference_data.loc[:, features])
         model_to_submit = f"preds_{model_name}"
         self.save_prediction(model_name, inference_data, model_to_submit)
-        print(f">>> Model {model_name} run complete!")
+        print(f"...model run complete!")
 
     # function to run the skulls model
     def run_skulls(self):
@@ -178,7 +178,7 @@ class RunModel:
         inference_data.loc[:, f"preds_{model_name}"] = model.predict(inference_data.loc[:, features])
         model_to_submit = f"preds_{model_name}"
         self.save_prediction(model_name, inference_data, model_to_submit)
-        print(f">>> Model {model_name} run complete!")
+        print(f"...model run complete!")
 
     # function to run the desperado model
     def run_desperado(self):
@@ -190,16 +190,18 @@ class RunModel:
         beautybeast_live = pd.read_csv(f"predictions/dh_beautybeast_live_preds_{self.roundn}.csv")
         skulls_live = pd.read_csv(f"predictions/dh_skulls_live_preds_{self.roundn}.csv")
         features = ["foxhound", "deadcell", "cobra", "beautybeast", "skulls"]
-        desperado_live = foxhound_live.merge(
-            right=deadcell_live, how='inner', on="id", suffixes=('', '2')).merge(
-            right=cobra_live, how='inner', on="id", suffixes=('', '3')).merge(
-            right=beautybeast_live, how='inner', on="id", suffixes=('', '4')).merge(
-            right=skulls_live, how='inner', on="id", suffixes=('', '5'))
+        desperado_live = (
+            foxhound_live
+                .merge(right=deadcell_live, how='inner', on="id", suffixes=('', '2'))
+                .merge(right=cobra_live, how='inner', on="id", suffixes=('', '3'))
+                .merge(right=beautybeast_live, how='inner', on="id", suffixes=('', '4'))
+                .merge(right=skulls_live, how='inner', on="id", suffixes=('', '5'))
+        )
         desperado_live.columns = ["id", "foxhound", "deadcell", "cobra", "beautybeast", "skulls"]
         desperado_live["prediction"] = desperado_live[features].mean(axis=1)
         desperado_live = desperado_live[["id", "prediction"]].set_index("id")
         desperado_live.to_csv(f"predictions/{model_name}_live_preds_{self.roundn}.csv")
-        print(f">>> Model {model_name} run complete!")
+        print(f"...model run complete!")
     
     # function to run the desperado model
     def run_desperadov3(self):
@@ -207,13 +209,17 @@ class RunModel:
         print(f"\nRunning {model_name} for live round # {self.roundn}...")
         foxhound_live = pd.read_csv(f"predictions/dh_foxhound_live_preds_{self.roundn}.csv")
         cobra_live = pd.read_csv(f"predictions/dh_cobra_live_preds_{self.roundn}.csv")
-        features = ["foxhound", "cobra"]
-        desperado_live = foxhound_live.merge(right=cobra_live, how='inner', on="id", suffixes=('', '2'))
+        features = ["foxhound", "cobra", "beautybeast"]
+        desperado_live = (
+            foxhound_live
+                .merge(right=cobra_live, how='inner', on="id", suffixes=('', '2'))
+                .merge(right=beautybeast_live, how='inner', on='id', suffixes=('', '3'))
+        )
         desperado_live.columns = ["id"] + features
         desperado_live["prediction"] = desperado_live[features].mean(axis=1)
         desperado_live = desperado_live[["id", "prediction"]].set_index("id")
         desperado_live.to_csv(f"predictions/{model_name}_live_preds_{self.roundn}.csv")
-        print(f">>> Model {model_name} run complete!")
+        print(f"...model run complete!")
     
     # function to run the gaia model
     def run_gaia(self):
@@ -235,7 +241,7 @@ class RunModel:
         )
         model_to_submit = f"preds_{model_name}_with_neutralization"
         self.save_prediction(model_name, inference_data, model_to_submit)
-        print(f">>> Model {model_name} run complete!")
+        print(f"...model run complete!")
 
     # function to run the terra model
     def run_terra(self):
@@ -257,4 +263,4 @@ class RunModel:
         )
         model_to_submit = f"preds_{model_name}_with_neutralization"
         self.save_prediction(model_name, inference_data, model_to_submit)
-        print(f">>> Model {model_name} run complete!")
+        print(f"...model run complete!")
