@@ -209,6 +209,7 @@ class RunModel:
         print(f"\nRunning {model_name} for live round # {self.roundn}...")
         foxhound_live = pd.read_csv(f"predictions/dh_foxhound_live_preds_{self.roundn}.csv")
         cobra_live = pd.read_csv(f"predictions/dh_cobra_live_preds_{self.roundn}.csv")
+        beautybeast_live = pd.read_csv(f"predictions/dh_beautybeast_live_preds_{self.roundn}.csv")
         features = ["foxhound", "cobra", "beautybeast"]
         desperado_live = (
             foxhound_live
