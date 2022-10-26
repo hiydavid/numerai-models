@@ -5,13 +5,11 @@ on:
    branches:
      only: main
 
-defaults:
-  resources:
-    instance-type: P4000
-
 jobs:
   # 1: clone repo to instance
   cloneRepo:
+    resources:
+      instance-type: C5
     outputs:
       repo:
         type: volume
@@ -21,10 +19,14 @@ jobs:
 
   # 2: download live data
   downloadLiveData:
+    resources:
+      instance-type: C5
     needs:
       - cloneRepo
     inputs:
       repo: cloneRepo.outputs.repo
+      PUBLIC_ID: secret: PUBLIC_ID
+      SECRET_KEY: secret: SECRET_KEY
     outputs:
       data:
         type: volume
@@ -39,6 +41,8 @@ jobs:
         pip install fastparquet
         pip install tensorflow==2.9.0
         pip intsll tensorflow_recommenders
+        cd /numerai-models
+        python downloadLiveData.py
       image: bash:5
 
 
