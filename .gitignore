@@ -1,6 +1,4 @@
 dev/
-data/model_names.json
-utils/api_keys.py
 .DS_Store
 *.csv
 *.parquet

@@ -34,22 +34,20 @@ jobs:
     uses: script@v1
     with:
       script: |-
+        pip3 install pandas==1.4.1
+        pip3 install numpy==1.21.2
+        pip3 install numerapi==2.11.0
+        pip3 install lightgbm==3.3.0
+        pip3 install pyarrow
+        pip3 install fastparquet
+        pip3 install tensorflow==2.9.0
+        pip3 install tensorflow_recommenders
+        python3 downloadLiveData.py
+        cp -R /inputs/repo /numerai-models
         cd /numerai-models
         ls
-      image: bash:5
-
-
-
-
-        # pip3 install pandas==1.4.1
-        # pip3 install numpy==1.21.2
-        # pip3 install numerapi==2.11.0
-        # pip3 install lightgbm==3.3.0
-        # pip3 install pyarrow
-        # pip3 install fastparquet
-        # pip3 install tensorflow==2.9.0
-        # pip3 intsll tensorflow_recommenders
-        # python downloadLiveData.py
+        python3 downloadLiveData.py 
+      image: tensorflow/tensorflow:1.14.0-gpu-py3
 
 
   # # 3. Show generating images using pretrained cat model
