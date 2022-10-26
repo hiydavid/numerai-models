@@ -7,14 +7,14 @@ on:
 
 defaults:
   env:
-    public_id: secret:PUBLIC_ID
-    secret_key: secret:SECRET_KEY
+    PUBLIC_ID: secret:PUBLIC_ID
+    SECRET_KEY: secret:SECRET_KEY
+  resources:
+    instance-type: P4000
 
 jobs:
   # 1: clone repo to instance
   cloneRepo:
-    resources:
-      instance-type: C5
     outputs:
       repo:
         type: volume
@@ -24,8 +24,6 @@ jobs:
 
   # 2: download live data
   downloadLiveData:
-    resources:
-      instance-type: C5
     needs:
       - cloneRepo
     inputs:
