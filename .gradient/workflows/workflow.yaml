@@ -20,13 +20,11 @@ jobs:
       url: https://github.com/hiydavid/numerai-models.git
 
   # 2: download live data
-  downloadNumeraiLiveData:
+  downloadLiveData:
     needs:
       - cloneRepo
     inputs:
       repo: cloneRepo.outputs.repo
-      PUBLIC_ID: secret:PUBLIC_ID
-      SECRET_KEY: secret:SECRET_KEY
     outputs:
       data:
         type: volume
