@@ -32,9 +32,6 @@ jobs:
         type: string
         with:
           value: secret:SECRET_KEY
-    uses: container@v1
-      with:
-      image: bash:5
 
   # 3: download live data
   downloadNumeraiLiveData:
@@ -42,6 +39,8 @@ jobs:
       - cloneNumeraiModelsRepo
     inputs:
       repo: cloneNumeraiModelsRepo.outputs.repo
+      PUBLIC_ID: getNumeraiIDandKey.inputs.PUBLIC_ID
+      SECRET_KEY: getNumeraiIDandKey.inputs.SECRET_KEY
     outputs:
       data:
         type: volume
