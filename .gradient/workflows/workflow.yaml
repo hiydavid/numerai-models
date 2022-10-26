@@ -1,25 +1,144 @@
-'on':
-  github:
-    branches:
-      only: main
+# numerai-models workflow on paperspace gradient
+
+on:
+ github:
+   branches:
+     only: main
+
+defaults:
+  resources:
+    instance-type: P4000
+
 jobs:
-  CloneRepo:
-    resources:
-      instance-type: C5
+  # 1: clone repo to instance
+  cloneNumeraiModelsRepo:
     outputs:
       repo:
         type: volume
     uses: git-checkout@v1
     with:
-      url: context.event.github.url
-  HelloWorld:
-    resources:
-      instance-type: C5
+      url: https://github.com/hiydavid/numerai-models.git
+
+  # 2. get numerai api public id and secret key
+  getNumeraiIDandKey:
     needs:
-      - CloneRepo
+      - cloneNumeraiModelsRepo
+    output:
+      PUBLIC_ID:
+        type: string
+        with:
+          value: secret:PUBLIC_ID
+      SECRET_KEY:
+        type: string
+        with:
+          value: secret:SECRET_KEY
+    uses: container@v1
+      with:
+      image: bash:5
+
+  # 3: download live data
+  downloadNumeraiLiveData:
+    needs:
+      - cloneNumeraiModelsRepo
     inputs:
-      repo: CloneRepo.outputs.repo
+      repo: cloneNumeraiModelsRepo.outputs.repo
+    outputs:
+      data:
+        type: volume
     uses: script@v1
     with:
-      script: python /inputs/repo/hello.py
-      image: tensorflow/tensorflow:1.14.0-py3
+      script: |-
+        pip3 install -r requirement.txt
+        cp -R /inputs/repo/numerai-models
+        cd /numerai
+        python3 get_live_data.py
+
+
+
+
+
+
+
+  # # 3. Show generating images using pretrained cat model
+
+  # generateCatImagesPretrainedModel:
+  #   resources:
+  #     instance-type: P4000
+  #   needs:
+  #     - cloneStyleGAN2Repo
+  #     - getPretrainedModelCats
+  #   inputs:
+  #     repo: cloneStyleGAN2Repo.outputs.repo
+  #     pretrainedNetwork: getPretrainedModelCats.outputs.pretrainedNetwork
+  #   outputs:
+  #     generatedCatsPretrained:
+  #       type: dataset
+  #       with:
+  #         ref: stylegan2-wsp-cats-generated
+  #   uses: script@v1
+  #   with:
+  #     script: |-
+  #       pip install scipy==1.3.3
+  #       pip install requests==2.22.0
+  #       pip install Pillow==6.2.1
+  #       cp -R /inputs/repo /stylegan2
+  #       cd /stylegan2
+  #       python run_generator.py generate-images \
+  #         --network=/inputs/pretrainedNetwork/stylegan2-cat-config-f.pkl \
+  #         --seeds=6600-6605 \
+  #         --truncation-psi=0.5 \
+  #         --result-dir=/outputs/generatedCatsPretrained
+  #       ls "-aFlR" /outputs
+  #     image: tensorflow/tensorflow:1.14.0-gpu-py3
+      
+      
+  # 4. Get pretrained car model
+
+  # getPretrainedModelCars:
+  #   resources:
+  #     instance-type: C4
+  #   outputs:
+  #     pretrainedNetwork:
+  #       type: dataset
+  #       with:
+  #         ref: stylegan2-wsp-cars-pretrained-network
+  #   uses: container@v1
+  #   with:
+  #     args:
+  #       - wget
+  #       - https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-car-config-f.pkl
+  #       - -P
+  #       - /outputs/pretrainedNetwork
+  #     image: alpine:latest
+      
+  # 5. Show generating images using pretrained car model
+
+  # generateCarImagesPretrainedModel:
+  #   resources:
+  #     instance-type: P4000
+  #   needs:
+  #     - cloneStyleGAN2Repo
+  #     - getPretrainedModelCars
+  #   inputs:
+  #     repo: cloneStyleGAN2Repo.outputs.repo
+  #     pretrainedNetwork: getPretrainedModelCars.outputs.pretrainedNetwork
+  #   outputs:
+  #     generatedCarsPretrained:
+  #       type: dataset
+  #       with:
+  #         ref: stylegan2-wsp-cars-generated
+  #   uses: script@v1
+  #   with:
+  #     script: |-
+  #       pip install scipy==1.3.3
+  #       pip install requests==2.22.0
+  #       pip install Pillow==6.2.1
+  #       cp -R /inputs/repo /stylegan2
+  #       cd /stylegan2 
+  #       python run_generator.py generate-images \
+  #         --network=gdrive:networks/stylegan2-car-config-f.pkl \
+  #         --seeds=6000-6025 \
+  #         --truncation-psi=0.5 \
+  #         --result-dir=/outputs/generatedCarsPretrained
+  #       ls "-aFlR" /outputs
+  #     image: tensorflow/tensorflow:1.14.0-gpu-py3
