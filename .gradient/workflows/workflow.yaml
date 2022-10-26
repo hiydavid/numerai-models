@@ -34,14 +34,14 @@ jobs:
     uses: script@v1
     with:
       script: |-
-        pip install pandas==1.4.1
-        pip install numpy==1.21.2
-        pip install numerapi==2.11.0
-        pip install lightgbm==3.3.0
-        pip install pyarrow
-        pip install fastparquet
-        pip install tensorflow==2.9.0
-        pip intsll tensorflow_recommenders
+        pip3 install pandas==1.4.1
+        pip3 install numpy==1.21.2
+        pip3 install numerapi==2.11.0
+        pip3 install lightgbm==3.3.0
+        pip3 install pyarrow
+        pip3 install fastparquet
+        pip3 install tensorflow==2.9.0
+        pip3 intsll tensorflow_recommenders
         cd /numerai-models
         python downloadLiveData.py
       image: bash:5
