@@ -19,40 +19,24 @@ jobs:
     with:
       url: https://github.com/hiydavid/numerai-models.git
 
-  # 2. get numerai api public id and secret key
-  getAPIKey:
-    output:
-      PUBLIC_ID:
-        type: string
-        with:
-          value: secret:PUBLIC_ID
-      SECRET_KEY:
-        type: string
-        with:
-          value: secret:SECRET_KEY
-    uses: container@v1
+  # 2: download live data
+  downloadNumeraiLiveData:
+    needs:
+      - cloneRepo
+    inputs:
+      repo: cloneRepo.outputs.repo
+      PUBLIC_ID: secret:PUBLIC_ID
+      SECRET_KEY: secret:SECRET_KEY
+    outputs:
+      data:
+        type: volume
+    uses: script@v1
     with:
-      image: bash:5
-
-
-  # # 3: download live data
-  # downloadNumeraiLiveData:
-  #   needs:
-  #     - cloneRepo
-  #   inputs:
-  #     repo: cloneRepo.outputs.repo
-  #     PUBLIC_ID: getNumeraiIDandKey.inputs.PUBLIC_ID
-  #     SECRET_KEY: getNumeraiIDandKey.inputs.SECRET_KEY
-  #   outputs:
-  #     data:
-  #       type: volume
-  #   uses: script@v1
-  #   with:
-  #     script: |-
-  #       pip3 install -r requirement.txt
-  #       cp -R /inputs/repo/numerai-models
-  #       cd /numerai
-  #       python3 get_live_data.py
+      script: |-
+        pip3 install -r requirement.txt
+        cp -R /inputs/repo/numerai-models
+        cd /numerai-models
+        python3 get_live_data.py
 
 
 
