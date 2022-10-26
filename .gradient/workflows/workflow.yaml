@@ -11,7 +11,7 @@ defaults:
 
 jobs:
   # 1: clone repo to instance
-  cloneNumeraiModelsRepo:
+  cloneRepo:
     outputs:
       repo:
         type: volume
@@ -19,28 +19,28 @@ jobs:
     with:
       url: https://github.com/hiydavid/numerai-models.git
 
-  # # 2. get numerai api public id and secret key
-  # getNumeraiIDandKey:
-  #   needs:
-  #     - cloneNumeraiModelsRepo
-  #   inputs:
-  #     repo: cloneNumeraiModelsRepo.outputs.repo
-  #   output:
-  #     PUBLIC_ID:
-  #       type: string
-  #       with:
-  #         value: secret:PUBLIC_ID
-  #     SECRET_KEY:
-  #       type: string
-  #       with:
-  #         value: secret:SECRET_KEY
+  # 2. get numerai api public id and secret key
+  getAPIKey:
+    needs:
+      - cloneRepo
+    inputs:
+      repo: cloneRepo.outputs.repo
+    output:
+      PUBLIC_ID:
+        type: string
+        with:
+          value: secret:PUBLIC_ID
+      SECRET_KEY:
+        type: string
+        with:
+          value: secret:SECRET_KEY
 
   # # 3: download live data
   # downloadNumeraiLiveData:
   #   needs:
-  #     - cloneNumeraiModelsRepo
+  #     - cloneRepo
   #   inputs:
-  #     repo: cloneNumeraiModelsRepo.outputs.repo
+  #     repo: cloneRepo.outputs.repo
   #     PUBLIC_ID: getNumeraiIDandKey.inputs.PUBLIC_ID
   #     SECRET_KEY: getNumeraiIDandKey.inputs.SECRET_KEY
   #   outputs:
