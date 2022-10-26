@@ -23,6 +23,8 @@ jobs:
   # getNumeraiIDandKey:
   #   needs:
   #     - cloneNumeraiModelsRepo
+  #   inputs:
+  #     repo: cloneNumeraiModelsRepo.outputs.repo
   #   output:
   #     PUBLIC_ID:
   #       type: string
