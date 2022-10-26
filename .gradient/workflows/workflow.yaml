@@ -31,10 +31,14 @@ jobs:
     uses: script@v1
     with:
       script: |-
-        pip3 install -r requirement.txt
-        cp -R /inputs/repo/numerai-models
-        cd /numerai-models
-        python3 get_live_data.py
+        pip install pandas==1.4.1
+        pip install numpy==1.21.2
+        pip install numerapi==2.11.0
+        pip install lightgbm==3.3.0
+        pip install pyarrow
+        pip install fastparquet
+        pip install tensorflow==2.9.0
+        pip intsll tensorflow_recommenders
 
 
 
