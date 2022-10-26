@@ -32,9 +32,6 @@ jobs:
         type: string
         with:
           value: secret:SECRET_KEY
-    uses: container@v1
-    with:
-      image: bash:5
 
   # 3: download live data
   downloadNumeraiLiveData:
