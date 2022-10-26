@@ -5,6 +5,11 @@ on:
    branches:
      only: main
 
+defaults:
+  env:
+    public_id: secret:PUBLIC_ID
+    secret_key: secret:SECRET_KEY
+
 jobs:
   # 1: clone repo to instance
   cloneRepo:
@@ -25,8 +30,6 @@ jobs:
       - cloneRepo
     inputs:
       repo: cloneRepo.outputs.repo
-      public_id: secret:PUBLIC_ID
-      secret_key: secret:SECRET_KEY
     outputs:
       data:
         type: volume
