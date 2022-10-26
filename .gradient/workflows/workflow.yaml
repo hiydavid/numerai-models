@@ -39,6 +39,7 @@ jobs:
         pip install fastparquet
         pip install tensorflow==2.9.0
         pip intsll tensorflow_recommenders
+      image: bash:5
 
 
 
