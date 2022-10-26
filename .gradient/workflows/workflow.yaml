@@ -21,10 +21,6 @@ jobs:
 
   # 2. get numerai api public id and secret key
   getAPIKey:
-    needs:
-      - cloneRepo
-    inputs:
-      repo: cloneRepo.outputs.repo
     output:
       PUBLIC_ID:
         type: string
@@ -34,6 +30,10 @@ jobs:
         type: string
         with:
           value: secret:SECRET_KEY
+    uses: container@v1
+    with:
+      image: bash:5
+
 
   # # 3: download live data
   # downloadNumeraiLiveData:
