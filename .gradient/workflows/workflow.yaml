@@ -25,8 +25,8 @@ jobs:
       - cloneRepo
     inputs:
       repo: cloneRepo.outputs.repo
-      PUBLIC_ID: secret: PUBLIC_ID
-      SECRET_KEY: secret: SECRET_KEY
+      public_id: secret:PUBLIC_ID
+      secret_key: secret:SECRET_KEY
     outputs:
       data:
         type: volume
