@@ -35,17 +35,40 @@ jobs:
     with:
       script: |-
         pip3 install numerapi==2.11.0
-        pip3 install lightgbm==3.3.0
         pip3 install pyarrow
         pip3 install fastparquet
+        cp -R /inputs/repo /numerai-models
+        cd /numerai-models
+        python3 downloadLiveData.py
+        cd data
+        ls
+      image: tensorflow/tensorflow:1.14.0-gpu-py3
+  
+  # 3. make predictions
+  makePredictions:
+    needs:
+      - downloadLiveData
+    inputs:
+      repo: cloneRepo.outputs.repo
+      data: downloadLiveData.outputs.data
+    outputs:
+      predictions:
+        type: volume
+    uses: script@v1
+    with:
+      script: |-
+        pip3 install numerapi==2.11.0
+        pip3 install lightgbm==3.3.0
         pip3 install tensorflow==2.9.0
         pip3 install tensorflow_recommenders
         cp -R /inputs/repo /numerai-models
         cd /numerai-models
-        python3 downloadLiveData.py
-        cd /data
+        python3 makePredictions.py
+        cd predictions
         ls
       image: tensorflow/tensorflow:1.14.0-gpu-py3
+
+
 
 
   # # 3. Show generating images using pretrained cat model

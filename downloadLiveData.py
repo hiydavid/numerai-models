@@ -1,13 +1,10 @@
 # download numerai live data
 
 # load libraries
-import pandas as pd
 from numerapi import NumerAPI
 import os
-from dotenv import load_dotenv 
 
 # instantiate env var
-load_dotenv()
 PUBLIC_ID = os.getenv('PUBLIC_ID')
 SECRET_KEY = os.getenv('SECRET_KEY')
 
