@@ -1,4 +1,4 @@
-### download numerai live data
+# download numerai live data
 
 # load libraries
 import pandas as pd
