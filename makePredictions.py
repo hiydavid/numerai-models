@@ -14,7 +14,7 @@ current_round = napi.get_current_round()
 print(f"Current round #: {current_round}")
 
 # init class
-nmr = RunModel(current_round=current_round)
+nmr = RunModel(roundn=current_round, mode="live")
 nmr.get_data()
 
 # run foxhound
