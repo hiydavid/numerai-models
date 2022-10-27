@@ -24,7 +24,7 @@ jobs:
       url: https://github.com/hiydavid/numerai-models.git
 
   # 2: get data and make predictions
-  getDataRunModels:
+  runLivePredictions:
     needs:
       - cloneRepo
     inputs:
@@ -44,9 +44,6 @@ jobs:
         pip3 install tensorflow_recommenders
         cp -R /inputs/repo /numerai-models
         cd /numerai-models
-        python3 downloadLiveData.py
         mkdir -p predictions
-        python3 makePredictions.py
-        cd predictions
-        ls
+        python3 run.py
       image: tensorflow/tensorflow:2.9.2
