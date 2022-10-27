@@ -1,9 +1,9 @@
 # numerai-models workflow on paperspace gradient
 
-on:
- github:
-   branches:
-     only: main
+# on:
+#  github:
+#    branches:
+#      only: main
 
 defaults:
   env:

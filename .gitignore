@@ -1,4 +1,6 @@
-dev/
+/dev
+/analysis
+/predictions
 .DS_Store
 *.csv
 *.parquet
