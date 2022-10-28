@@ -1,58 +1,37 @@
 # Models for Numerai Competition
 
 ## Performance
-<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/ModelCorrPlots.png">
-<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/ModelTCPlots.png">
-<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/CorrRankPlots.png">
-<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/SharpeRatioPlots.png">
-<img width="800" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/TotalReturnPlots.png">
+<img width="550" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/ModelCorrPlots.png">
+<img width="550" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/ModelTCPlots.png">
+<img width="550" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/SharpeRatioPlots.png">
+<img width="550" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/TotalReturnPlots.png">
 
 ## Models
 ### **LightGBM-Based Models**
-#### Foxhound: 
-* Trained on medium features and main target
-* 50 features neuralized
+* **Foxhound**: Trained on medium features, with top 50 features neuralized
 
-#### Deadcell: 
-* Trained on small features and main target
-* 5 features neutralized
+* **Deadcell**: Trained on small features, with top 5 features neutralized
 
-#### Cobra: 
-* Trained on rest of the features and main target
-* 60 features neutralized
+* **Cobra**: Trained on rest of the features, with top 60 features neutralized
 
-#### BeautyBeast: 
-* Trained on top 500 features by f-stats
-* No features neutralized
+* **BeautyBeast**: Trained on top 500 features by f-stats, without neutralization
 
-#### Skulls:
-* Trained on top 200 and bottom 200 features
-* Top/bottom determined by correlation to target
-* No features neutralized
+* **Skulls**: Trained on top 200 and bottom 200 features by target correlation, without neutralization
 
-#### Desperado: 
-* Ensemble prediction of all other models
-* v1 using simple averaging
-* v2 using LightGBM, trained on 50% of combined validation set
-* v3 using simple averaging but only include Foxhound and Cobra predictions
+* [Decommissioned] **Desperado**: Ensemble prediction using simple averaging across Foxhound, Cobra, and BeautyBeast
 
 ### **DNN-Based Models**
-#### Gaia
-* MLP with 4 layers, with 472, 235, 118, 59 units each respectively
-* Trained on medium features and main target
-* 50 features neuralized
+* **Gaia**: Multilayer Perceptron network with 4 layers, with 472, 235, 118, 59 units each respectively, trained on medium features, with top 50 features neuralized
 
-#### Terra
-* MLP with 2 layers, with 472, 236 units each respectively
-* Added a feature crossing layer with batch normalization
-* Trained on medium features and main target
-* 50 features neuralized
+* **Terra**: Deep-Cross network with 2 layers, with 472, 236 units each respectively, feature crossing layer with batch normalization, trained on medium features, with top 50 features neuralized
 
-#### Spira
-#### Ivalice
-#### Cocoon
-#### Eos
+* **Spira**: WIP
 
+* **Ivalice**: WIP
+
+* **Cocoon**: WIP
+
+* **Eos**: WIP
 
 ## Tracking Results
 * [Model performance](https://numer.ai/models)
