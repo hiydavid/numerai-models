@@ -1,9 +1,11 @@
 # numerai-models workflow on paperspace gradient
 
 on:
- github:
-   branches:
-     only: main
+  schedule:
+    - cron: '5 4 * * *'
+  # github:
+  #   branches:
+  #     only: main
 
 defaults:
   env:

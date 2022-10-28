@@ -1,10 +1,10 @@
 # Models for Numerai Competition
 
 ## Performance
-<img width="550" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/ModelCorrPlots.png">
-<img width="550" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/ModelTCPlots.png">
-<img width="550" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/SharpeRatioPlots.png">
-<img width="550" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/TotalReturnPlots.png">
+<img width="650" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/ModelCorrPlots.png">
+<img width="650" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/ModelTCPlots.png">
+<img width="650" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/SharpeRatioPlots.png">
+<img width="650" alt="image" src="https://raw.githubusercontent.com/hiydavid/numerai-models/main/plots/TotalReturnPlots.png">
 
 ## Models
 ### **LightGBM-Based Models**
