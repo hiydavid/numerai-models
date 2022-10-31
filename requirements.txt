@@ -1,7 +1,5 @@
 ### install the following
 python-dotenv
-pandas==1.4.1
-numpy==1.21.2
 numerapi==2.11.0
 lightgbm==3.3.0
 xgboost==1.6.0
