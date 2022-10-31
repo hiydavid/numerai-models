@@ -2,9 +2,9 @@
 python-dotenv
 numerapi==2.11.0
 lightgbm==3.3.0
-xgboost==1.6.0
 pyarrow
 fastparquet
 yfinance==0.1.70
 tensorflow==2.9.0
 tensorflow_recommenders
+torch==1.13.0
