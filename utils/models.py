@@ -1,17 +1,16 @@
 # import dependencies
 import pandas as pd
+import numpy as np
 import tensorflow as tf
 import tensorflow_recommenders as tfrs
-import gc
 import json
-from utils.utils import (
-    load_model,
-    neutralize,
-    ERA_COL,
-    DATA_TYPE_COL,
-    TARGET_COL,
-)
+import scipy
+from scipy.stats import skew
 
+# load vars
+ERA_COL = "era"
+DATA_TYPE_COL = "data_type"
+TARGET_COL = "target_nomi_v4_20"
 
 # run model class
 class RunModel:
@@ -88,6 +87,33 @@ class RunModel:
         else:
             print("ERROR: Features list do not exist!")
     
+    # function to neuralize preds (https://github.com/numerai/example-scripts/blob/master/utils.py)
+    def run_neutralizer(self, df, columns, neutralizers=None, proportion=1.0, normalize=True, era_col=ERA_COL):
+
+        if neutralizers is None:
+            neutralizers = []
+        
+        unique_eras = df[era_col].unique()
+        computed = []
+        
+        for u in unique_eras:
+            df_era = df[df[era_col] == u]
+            scores = df_era[columns].values
+            if normalize:
+                scores2 = []
+                for x in scores.T:
+                    x = (scipy.stats.rankdata(x, method='ordinal') - .5) / len(x)
+                    x = scipy.stats.norm.ppf(x)
+                    scores2.append(x)
+                scores = np.array(scores2).T
+            exposures = df_era[neutralizers].values
+            scores -= proportion * exposures.dot(
+                np.linalg.pinv(exposures.astype(np.float32), rcond=1e-6).dot(scores.astype(np.float32)))
+            scores /= scores.std(ddof=0)
+            computed.append(scores)
+        
+        return pd.DataFrame(np.concatenate(computed), columns=columns, index=df.index)
+
     # function to run the foxhound model
     def run_foxhound(self):
         model_name = f"dh_foxhound"
@@ -96,9 +122,9 @@ class RunModel:
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         inference_data = self.inference_data.loc[:, read_columns]
         riskiest_features = self.get_features(get="riskiest_50_medium")
-        model = load_model(model_name)
+        model = pd.read_pickle(f"models/{model_name}.pkl")
         inference_data.loc[:, f"preds_{model_name}"] = model.predict(inference_data.loc[:, features])
-        inference_data[f"preds_{model_name}_with_neutralization"] = neutralize(
+        inference_data[f"preds_{model_name}_with_neutralization"] = self.run_neutralizer(
             df=inference_data,
             columns=[f"preds_{model_name}"],
             neutralizers=riskiest_features,
@@ -118,9 +144,9 @@ class RunModel:
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         inference_data = self.inference_data.loc[:, read_columns]
         riskiest_features = self.get_features(get="riskiest_5_small")
-        model = load_model(model_name)
+        model = pd.read_pickle(f"models/{model_name}.pkl")
         inference_data.loc[:, f"preds_{model_name}"] = model.predict(inference_data.loc[:, features])
-        inference_data[f"preds_{model_name}_with_neutralization"] = neutralize(
+        inference_data[f"preds_{model_name}_with_neutralization"] = self.run_neutralizer(
             df=inference_data,
             columns=[f"preds_{model_name}"],
             neutralizers=riskiest_features,
@@ -140,9 +166,9 @@ class RunModel:
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         inference_data = self.inference_data.loc[:, read_columns]
         riskiest_features = self.get_features(get="riskiest_60_other")
-        model = load_model(model_name)
+        model = pd.read_pickle(f"models/{model_name}.pkl")
         inference_data.loc[:, f"preds_{model_name}"] = model.predict(inference_data.loc[:, features])
-        inference_data[f"preds_{model_name}_with_neutralization"] = neutralize(
+        inference_data[f"preds_{model_name}_with_neutralization"] = self.run_neutralizer(
             df=inference_data,
             columns=[f"preds_{model_name}"],
             neutralizers=riskiest_features,
@@ -161,7 +187,7 @@ class RunModel:
         features = self.get_features(get="fstats_500")
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         inference_data = self.inference_data.loc[:, read_columns]
-        model = load_model(model_name)
+        model = pd.read_pickle(f"models/{model_name}.pkl")
         inference_data.loc[:, f"preds_{model_name}"] = model.predict(inference_data.loc[:, features])
         model_to_submit = f"preds_{model_name}"
         self.save_prediction(model_name, inference_data, model_to_submit)
@@ -174,7 +200,7 @@ class RunModel:
         features = self.get_features(get="top_bottom")
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         inference_data = self.inference_data.loc[:, read_columns]
-        model = load_model(model_name)
+        model = pd.read_pickle(f"models/{model_name}.pkl")
         inference_data.loc[:, f"preds_{model_name}"] = model.predict(inference_data.loc[:, features])
         model_to_submit = f"preds_{model_name}"
         self.save_prediction(model_name, inference_data, model_to_submit)
@@ -232,7 +258,7 @@ class RunModel:
         riskiest_features = self.get_features(get="riskiest_50_medium")
         model = tf.keras.models.load_model(f'models/{model_name}.h5')
         inference_data.loc[:, f"preds_{model_name}"] = model.predict(inference_data.loc[:, features])
-        inference_data[f"preds_{model_name}_with_neutralization"] = neutralize(
+        inference_data[f"preds_{model_name}_with_neutralization"] = self.run_neutralizer(
             df=inference_data,
             columns=[f"preds_{model_name}"],
             neutralizers=riskiest_features,
@@ -254,7 +280,7 @@ class RunModel:
         riskiest_features = self.get_features(get="riskiest_50_medium")
         model = tf.keras.models.load_model(f'models/{model_name}.h5')
         inference_data.loc[:, f"preds_{model_name}"] = model.predict(inference_data.loc[:, features])
-        inference_data[f"preds_{model_name}_with_neutralization"] = neutralize(
+        inference_data[f"preds_{model_name}_with_neutralization"] = self.run_neutralizer(
             df=inference_data,
             columns=[f"preds_{model_name}"],
             neutralizers=riskiest_features,
