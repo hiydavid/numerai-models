@@ -48,9 +48,9 @@ elif current_round > last_run_log["run_round"]:
     nmr.run_cobra()
     nmr.run_beautybeast()
     nmr.run_skulls()
-    nmr.run_desperadov3()
     nmr.run_gaia()
     nmr.run_terra()
+    nmr.run_spira()
 
     # clear out trash
     gc.collect()
