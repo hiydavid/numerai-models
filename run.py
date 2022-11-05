@@ -6,7 +6,8 @@ import gc
 import json
 import datetime
 from numerapi import NumerAPI
-from utils.models import RunModel
+from utils.inference import RunModel
+from utils.models import GaiaModel
 
 # instantiate env var
 PUBLIC_ID = os.getenv('PUBLIC_ID')
@@ -40,7 +41,7 @@ elif current_round > last_run_log["run_round"]:
         dest_path=f"data/live_{current_round}.parquet"
     )
     
-    # run modes
+    # run models
     nmr = RunModel(roundn=current_round, mode="live")
     nmr.get_data()
     nmr.run_foxhound()
@@ -51,8 +52,10 @@ elif current_round > last_run_log["run_round"]:
     nmr.run_gaia()
     nmr.run_terra()
     nmr.run_spira()
+    gc.collect()
 
-    # clear out trash
+    # run test models
+    nmr.run_dojo()
     gc.collect()
 
     # read model name json file
