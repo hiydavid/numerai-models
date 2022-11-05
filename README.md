@@ -33,6 +33,9 @@
 
 * **Eos**: WIP
 
+### **Dojo**
+* **Gaia**: Testing retrained Gaia model with PyTorch.
+
 ## Tracking Results
 * [Model performance](https://numer.ai/models)
 * [Tournament leaderboard](https://numer.ai/tournament)
