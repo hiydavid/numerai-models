@@ -238,8 +238,10 @@ class RunModel:
         features = self.get_features(get="fstats_500")
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
         inference_data = self.inference_data.loc[:, read_columns]
-        model = tf.keras.models.load_model(f'models/{model_name}.h5')
-        inference_data.loc[:, f"preds_{model_name}"] = model.predict(inference_data.loc[:, features])
+        infernece_ds = torch.from_numpy(inference_data[features].dropna().values)
+        model = torch.load(f"models/{model_name}.pt")
+        model.eval()
+        inference_data.loc[:, f"preds_{model_name}"] = model(infernece_ds).squeeze(-1).detach().numpy()
         model_to_submit = f"preds_{model_name}"
         self.save_prediction(model_name, inference_data, model_to_submit)
         print(f"...model run complete!")
