@@ -8,33 +8,20 @@
 
 ## Models
 ### **LightGBM-Based Models**
-* **Foxhound**: Trained on medium features, with top 50 features neuralized
-
-* **Deadcell**: Trained on small features, with top 5 features neutralized
-
-* **Cobra**: Trained on rest of the features, with top 60 features neutralized
-
-* **BeautyBeast**: Trained on top 500 features by f-stats, without neutralization
-
-* **Skulls**: Trained on top 200 and bottom 200 features by target correlation, without neutralization
-
-* [Decommissioned] **Desperado**: Ensemble prediction using simple averaging across Foxhound, Cobra, and BeautyBeast
+* Foxhound
+* Deadcell
+* Cobra
+* BeautyBeast
+* Skulls
 
 ### **DNN-Based Models**
-* **Gaia**: Multilayer Perceptron network with 4 layers, with 472, 235, 118, 59 units each respectively, trained on medium features, with top 50 features neuralized
-
-* **Terra**: Deep-Cross network with 2 layers, with 472, 236 units each respectively, feature crossing layer with batch normalization, trained on medium features, with top 50 features neuralized
-
-* **Spira**: WIP
-
-* **Ivalice**: WIP
-
-* **Cocoon**: WIP
-
-* **Eos**: WIP
-
-### **Dojo**
-* **Gaia**: Testing retrained Gaia model with PyTorch.
+* Gaia
+* Gaia v2 (Dojo)
+* Terra
+* Spira
+* Ivalice (WIP)
+* Cocoon (WIP)
+* Eos (WIP)
 
 ## Tracking Results
 * [Model performance](https://numer.ai/models)

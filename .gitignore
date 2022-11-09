@@ -1,6 +1,7 @@
 /dev
 /analysis
 /predictions
+/models
 .DS_Store
 *.csv
 *.parquet
