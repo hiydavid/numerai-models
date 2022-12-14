@@ -255,7 +255,7 @@ class RunModel:
         inference_data = self.inference_data.loc[:, read_columns]
         infernece_ds = torch.from_numpy(inference_data[features].dropna().values)
         riskiest_features = self.get_features(get="riskiest_50_medium")
-        model = torch.load(f"models/dh_gaiav2.pt") # hardcode
+        model = torch.load(f"models/dh_gaia.pt") # hardcode
         model.eval()
         inference_data.loc[:, f"preds_{model_name}"] = model(infernece_ds).squeeze(-1).detach().numpy()
         inference_data[f"preds_{model_name}_with_neutralization"] = self.run_neutralizer(
