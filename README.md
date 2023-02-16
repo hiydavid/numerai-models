@@ -9,19 +9,11 @@
 ## Models
 ### **LightGBM-Based Models**
 * Foxhound
-* Deadcell
 * Cobra
-* BeautyBeast
-* Skulls
 
 ### **DNN-Based Models**
 * Gaia
-* Gaia v2 (Dojo)
-* Terra
 * Spira
-* Ivalice (WIP)
-* Cocoon (WIP)
-* Eos (WIP)
 
 ## Tracking Results
 * [Model performance](https://numer.ai/models)

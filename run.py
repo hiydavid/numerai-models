@@ -49,12 +49,12 @@ try:
 
         # run models
         nmr.run_foxhound()
-        nmr.run_deadcell()
+        # nmr.run_deadcell()
         nmr.run_cobra()
-        nmr.run_beautybeast()
-        nmr.run_skulls()
+        # nmr.run_beautybeast()
+        # nmr.run_skulls()
         nmr.run_gaia()
-        nmr.run_terra()
+        # nmr.run_terra()
         nmr.run_spira()
         gc.collect()
 
