@@ -48,15 +48,17 @@ try:
         nmr.get_data()
 
         # run models
-        nmr.run_foxhound()
-        # nmr.run_deadcell()
+        nmr.run_foxhound()        
         nmr.run_cobra()
-        # nmr.run_beautybeast()
-        # nmr.run_skulls()
         nmr.run_gaia()
-        # nmr.run_terra()
         nmr.run_spira()
         gc.collect()
+
+        # 
+        # nmr.run_terra()
+        # nmr.run_beautybeast()
+        # nmr.run_skulls()
+        # nmr.run_deadcell()
 
         # run test (dojo) model
         nmr.run_dojo()
